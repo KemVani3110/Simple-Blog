@@ -49,13 +49,13 @@ export default function Footer() {
                 <Link href="/">Trang chủ</Link>
               </li>
               <li>
-                <Link href="/#recent-posts">Bài viết</Link>
+                <Link href="/Blogs">Bài viết</Link>
               </li>
               <li>
-                <Link href="/about">Giới thiệu</Link>
+                <Link href="/About">Giới thiệu</Link>
               </li>
               <li>
-                <Link href="/contact">Liên hệ</Link>
+                <Link href="/Contact">Liên hệ</Link>
               </li>
               <li>
                 <Link href="/privacy-policy">Chính sách bảo mật</Link>
@@ -89,7 +89,7 @@ export default function Footer() {
             <ul className={styles.contactInfo}>
               <li>
                 <FontAwesomeIcon icon={faMapMarkerAlt} />
-                <span>123 Đường ABC, Quận 1, TP. Hồ Chí Minh</span>
+                <span>123 Đường ABC, Quận 5, TP. Hồ Chí Minh</span>
               </li>
               <li>
                 <FontAwesomeIcon icon={faPhone} />

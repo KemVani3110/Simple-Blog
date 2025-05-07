@@ -113,7 +113,7 @@ export default function About() {
                     height={200}
                   />
                 </div>
-                <h3>Nguyễn Văn A</h3>
+                <h3>Huỳnh Chu Minh Khôi</h3>
                 <p>Founder & CEO</p>
               </div>
               
@@ -126,7 +126,7 @@ export default function About() {
                     height={200}
                   />
                 </div>
-                <h3>Trần Thị B</h3>
+                <h3>Huỳnh Chu Minh Khôi</h3>
                 <p>Lead Developer</p>
               </div>
               
@@ -139,7 +139,7 @@ export default function About() {
                     height={200}
                   />
                 </div>
-                <h3>Lê Văn C</h3>
+                <h3>Huỳnh Chu Minh Khôi</h3>
                 <p>Content Editor</p>
               </div>
               
@@ -152,7 +152,7 @@ export default function About() {
                     height={200}
                   />
                 </div>
-                <h3>Phạm Thị D</h3>
+                <h3>Huỳnh Chu Minh Khôi</h3>
                 <p>UX/UI Designer</p>
               </div>
             </div>
