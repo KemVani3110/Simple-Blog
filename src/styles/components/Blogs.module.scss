@@ -1,0 +1,384 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.blogsContainer {
+  padding: $spacing-lg 0;
+  min-height: calc(100vh - #{$header-height} - #{$footer-height}); 
+  max-width: 1200px;
+  margin: 0 auto;
+  
+  [data-theme="dark"] & {
+    background-color: theme-color($dark-theme, 'bg');
+    color: theme-color($dark-theme, 'text');
+  }
+}
+
+.pageHeader {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+  padding: $spacing-xl 0;
+  background-color: theme-color($light-theme, 'surface');
+  border-radius: 12px;
+  box-shadow: 0 4px 12px theme-color($light-theme, 'shadow');
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, color('primary'), color('secondary'), color('accent'));
+  }
+  
+  [data-theme="dark"] & {
+    background-color: theme-color($dark-theme, 'surface');
+    box-shadow: 0 4px 15px theme-color($dark-theme, 'shadow');
+  }
+  
+  h1 {
+    font-size: 2.8rem;
+    margin-bottom: $spacing-md;
+    color: color('primary');
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  
+  p {
+    font-size: 1.25rem;
+    color: color('secondary');
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+}
+
+.filterSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-xl;
+  background-color: theme-color($light-theme, 'card-bg');
+  padding: $spacing-lg;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px theme-color($light-theme, 'shadow');
+  
+  [data-theme="dark"] & {
+    background-color: theme-color($dark-theme, 'card-bg');
+    box-shadow: 0 2px 10px theme-color($dark-theme, 'shadow');
+  }
+  
+  @media (min-width: map-get($breakpoints, 'tablet')) {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.searchBox {
+  flex: 1;
+  max-width: 100%;
+  position: relative;
+  margin-bottom: $spacing-md;
+  top: 55px;
+  
+  .searchIcon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    opacity: 0.7;
+    font-size: 1rem;
+    z-index: 2;
+    color: color('secondary');
+  }
+  
+  @media (min-width: map-get($breakpoints, 'tablet')) {
+    max-width: 350px;
+    margin-bottom: 0;
+  }
+}
+
+.searchInput {
+  width: 100%;
+  padding: $spacing-md $spacing-md $spacing-md 45px;
+  border-radius: 30px;
+  border: 2px solid transparent;
+  background-color: theme-color($light-theme, 'surface');
+  color: theme-color($light-theme, 'text');
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  height: 50px;
+  
+  &:focus {
+    outline: none;
+    border-color: color('primary');
+    box-shadow: 0 0 0 3px rgba(color('primary'), 0.2);
+    
+    + .searchIcon {
+      color: color('primary');
+      opacity: 1;
+    }
+  }
+  
+  &::placeholder {
+    color: rgba(theme-color($light-theme, 'text'), 0.5);
+  }
+  
+  [data-theme="dark"] & {
+    background-color: theme-color($dark-theme, 'surface');
+    color: theme-color($dark-theme, 'text');
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    
+    &:focus {
+      border-color: color('primary');
+      box-shadow: 0 0 0 3px rgba(color('primary'), 0.3);
+    }
+    
+    &::placeholder {
+      color: rgba(theme-color($dark-theme, 'text'), 0.5);
+    }
+  }
+}
+
+.tagsContainer {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  
+  @media (min-width: map-get($breakpoints, 'tablet')) {
+    align-items: flex-end;
+  }
+}
+
+.tagsHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-sm;
+  
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    color: color('secondary');
+  }
+  
+  .headerIcon {
+    font-size: 1.1rem;
+    color: color('primary');
+  }
+  
+  @media (min-width: map-get($breakpoints, 'tablet')) {
+    justify-content: flex-end;
+    width: 100%;
+  }
+}
+
+.tagsFilter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  max-width: 100%;
+  justify-content: flex-start;
+  
+  @media (min-width: map-get($breakpoints, 'tablet')) {
+    justify-content: flex-end;
+    max-height: 110px;
+    overflow-y: auto;
+    padding-right: $spacing-sm;
+    
+    /* Custom scrollbar for tagsFilter */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: rgba(theme-color($light-theme, 'surface'), 0.5);
+      border-radius: 10px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: rgba(color('primary'), 0.3);
+      border-radius: 10px;
+      
+      &:hover {
+        background: rgba(color('primary'), 0.5);
+      }
+    }
+    
+    [data-theme="dark"] &::-webkit-scrollbar-track {
+      background: rgba(theme-color($dark-theme, 'surface'), 0.5);
+    }
+  }
+}
+
+.tagBtn {
+  @include button-outline;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  background-color: theme-color($light-theme, 'surface');
+  border: 1px solid rgba(color('primary'), 0.2);
+  color: theme-color($light-theme, 'text');
+  border-radius: 30px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  
+  .tagIcon {
+    font-size: 0.85rem;
+    color: color('secondary');
+    transition: all 0.25s ease;
+  }
+  
+  &:hover {
+    background-color: rgba(color('primary'), 0.1);
+    color: color('primary');
+    transform: translateY(-2px);
+    
+    .tagIcon {
+      color: color('primary');
+    }
+  }
+  
+  &.active {
+    background-color: color('primary');
+    color: white;
+    border-color: color('primary');
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(color('primary'), 0.3);
+    
+    .tagIcon {
+      color: white;
+    }
+  }
+  
+  [data-theme="dark"] & {
+    background-color: theme-color($dark-theme, 'surface');
+    color: theme-color($dark-theme, 'text');
+    border: 1px solid rgba(color('primary'), 0.3);
+    
+    &:hover {
+      background-color: rgba(color('primary'), 0.2);
+      color: color('primary');
+    }
+    
+    &.active {
+      background-color: color('primary');
+      color: white;
+      border-color: color('primary');
+      box-shadow: 0 4px 8px rgba(color('primary'), 0.4);
+    }
+  }
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: $spacing-xl;
+  
+  @media (min-width: map-get($breakpoints, 'mobile')) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: map-get($breakpoints, 'desktop')) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.noResults {
+  text-align: center;
+  padding: $spacing-xl;
+  background-color: theme-color($light-theme, 'surface');
+  border-radius: 12px;
+  box-shadow: 0 4px 12px theme-color($light-theme, 'shadow');
+  margin: $spacing-xl auto;
+  max-width: 600px;
+  
+  [data-theme="dark"] & {
+    background-color: theme-color($dark-theme, 'surface');
+    box-shadow: 0 4px 12px theme-color($dark-theme, 'shadow');
+  }
+  
+  .noResultsIcon {
+    font-size: 3rem;
+    color: color('secondary');
+    opacity: 0.6;
+    margin-bottom: $spacing-md;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    color: color('secondary');
+    margin-bottom: $spacing-md;
+  }
+}
+
+// Optional pagination styles
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: $spacing-xl;
+  gap: $spacing-sm;
+  
+  .pageButton {
+    @include button-outline;
+    padding: $spacing-sm $spacing-md;
+    min-width: 40px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+    
+    &.active {
+      background-color: color('primary');
+      color: white;
+      box-shadow: 0 4px 8px rgba(color('primary'), 0.3);
+    }
+  }
+}
+
+// Animation for post cards
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Apply this class to your PostCard component for animation
+.postCard {
+  animation: fadeInUp 0.6s ease-out forwards;
+  animation-fill-mode: both;
+  
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+  
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px theme-color($light-theme, 'shadow');
+    
+    [data-theme="dark"] & {
+      box-shadow: 0 12px 20px theme-color($dark-theme, 'shadow');
+    }
+  }
+}

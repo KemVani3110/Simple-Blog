@@ -1,0 +1,684 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.homeContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+}
+
+// Hero Section
+.hero {
+  display: flex;
+  align-items: center;
+  padding: $spacing-xl 0;
+  gap: $spacing-lg;
+  min-height: 500px;
+  
+  @include respond-to('tablet') {
+    flex-direction: column;
+    text-align: center;
+    padding: $spacing-lg 0;
+  }
+
+  .heroContent {
+    flex: 1;
+    
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: $spacing-md;
+      background-image: linear-gradient(135deg, color('primary'), color('secondary'));
+      -webkit-background-clip: text;
+      color: transparent;
+      
+      @include respond-to('tablet') {
+        font-size: 2.5rem;
+      }
+      
+      @include respond-to('mobile') {
+        font-size: 2rem;
+      }
+    }
+    
+    p {
+      font-size: 1.3rem;
+      color: theme-color($light-theme, 'text');
+      margin-bottom: $spacing-lg;
+      line-height: 1.6;
+      max-width: 500px;
+      
+      [data-theme='dark'] & {
+        color: theme-color($dark-theme, 'text');
+      }
+      
+      @include respond-to('mobile') {
+        font-size: 1.1rem;
+      }
+    }
+  }
+  
+  .heroImage {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .imagePlaceholder {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 15px 30px theme-color($light-theme, 'shadow');
+      transform: rotate(2deg);
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: rotate(0);
+      }
+      
+      [data-theme='dark'] & {
+        box-shadow: 0 15px 30px theme-color($dark-theme, 'shadow');
+      }
+      
+      img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+    }
+  }
+  
+  .heroCta {
+    display: flex;
+    gap: $spacing-md;
+    margin-top: $spacing-lg;
+    
+    @include respond-to('mobile') {
+      flex-direction: column;
+      gap: $spacing-sm;
+    }
+  }
+}
+
+// Section styling
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-lg;
+  
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    position: relative;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -10px;
+      width: 50px;
+      height: 4px;
+      background-color: color('primary');
+    }
+    
+    @include respond-to('mobile') {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .viewAll {
+    color: color('primary');
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+    
+    &:hover {
+      color: color('secondary');
+      text-decoration: underline;
+    }
+  }
+}
+
+// Featured posts section
+.featuredPosts {
+  margin: $spacing-xl 0;
+}
+
+.featuredGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: $spacing-md;
+  
+  @include respond-to('tablet') {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  @include respond-to('mobile') {
+    grid-template-columns: 1fr;
+  }
+  
+  .mainFeature {
+    grid-column: span 2;
+    grid-row: span 1;
+    
+    @include respond-to('mobile') {
+      grid-column: span 1;
+    }
+  }
+}
+
+// Latest posts section
+.latestPosts {
+  margin: $spacing-xl 0;
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $spacing-lg;
+  
+  @include respond-to('mobile') {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Newsletter section
+.newsletter {
+  margin: $spacing-xl 0;
+  background-color: theme-color($light-theme, 'surface');
+  border-radius: 16px;
+  padding: $spacing-xl;
+  text-align: center;
+  
+  [data-theme='dark'] & {
+    background-color: theme-color($dark-theme, 'surface');
+  }
+  
+  .newsletterContent {
+    max-width: 600px;
+    margin: 0 auto;
+    
+    h2 {
+      font-size: 2rem;
+      margin-bottom: $spacing-md;
+    }
+    
+    p {
+      font-size: 1.1rem;
+      margin-bottom: $spacing-lg;
+      color: theme-color($light-theme, 'text');
+      
+      [data-theme='dark'] & {
+        color: theme-color($dark-theme, 'text');
+      }
+    }
+  }
+  
+  .subscribeForm {
+    display: flex;
+    gap: $spacing-sm;
+    
+    @include respond-to('mobile') {
+      flex-direction: column;
+    }
+    
+    input {
+      flex: 1;
+      padding: $spacing-md;
+      border-radius: 8px;
+      border: 1px solid theme-color($light-theme, 'card-border');
+      background-color: theme-color($light-theme, 'card-bg');
+      color: theme-color($light-theme, 'text');
+      
+      &:focus {
+        outline: none;
+        border-color: color('primary');
+        box-shadow: 0 0 0 2px rgba(color('primary'), 0.2);
+      }
+      
+      [data-theme='dark'] & {
+        border: 1px solid theme-color($dark-theme, 'card-border');
+        background-color: theme-color($dark-theme, 'card-bg');
+        color: theme-color($dark-theme, 'text');
+      }
+    }
+  }
+}
+
+// Button styles - using existing mixins
+.primaryButton {
+  @include button-primary;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: 8px;
+  text-decoration: none;
+  border: none;
+  
+  &:hover {
+    transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(color('primary'), 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.outlineButton {
+  @include button-outline;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: 8px;
+  border-width: 2px;
+  text-decoration: none;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(map-get($colors, 'primary'), 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Add these styles to your index.module.scss file
+
+// Widgets Container
+.widgetsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  height: 100%;
+}
+
+.widgetsTopRow {
+  display: flex;
+  gap: $spacing-md;
+  
+  @include respond-to('mobile') {
+    flex-direction: column;
+  }
+}
+
+// Popular Topics / Tag Cloud
+.popularTopics {
+  background-color: theme-color($light-theme, 'surface');
+  border-radius: 16px;
+  padding: $spacing-md;
+  flex: 1;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  [data-theme='dark'] & {
+    background-color: theme-color($dark-theme, 'surface');
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    
+    &:hover {
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: $spacing-sm;
+    font-weight: 600;
+    position: relative;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 40px;
+      height: 3px;
+      background-color: color('primary');
+    }
+  }
+  
+  .tagCloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+    margin-top: $spacing-md;
+    
+    .tag {
+      background-color: rgba(color('primary'), 0.1);
+      color: color('primary');
+      padding: $spacing-xs $spacing-sm;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      
+      &:hover {
+        background-color: color('primary');
+        color: white;
+        transform: translateY(-2px);
+      }
+      
+      [data-theme='dark'] & {
+        background-color: rgba(color('primary'), 0.2);
+        
+        &:hover {
+          background-color: color('primary');
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+// Blog Stats Widget
+.blogStats {
+  background-color: theme-color($light-theme, 'surface');
+  border-radius: 16px;
+  padding: $spacing-md;
+  flex: 1;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  [data-theme='dark'] & {
+    background-color: theme-color($dark-theme, 'surface');
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    
+    &:hover {
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: $spacing-md;
+    font-weight: 600;
+    position: relative;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 40px;
+      height: 3px;
+      background-color: color('primary');
+    }
+  }
+  
+  .statsList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    li {
+      display: flex;
+      align-items: center;
+      margin-bottom: $spacing-sm;
+      padding-bottom: $spacing-sm;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      
+      &:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+      
+      [data-theme='dark'] & {
+        border-bottom-color: rgba(255, 255, 255, 0.05);
+      }
+    }
+    
+    .statIcon {
+      font-size: 1.3rem;
+      margin-right: $spacing-sm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background-color: rgba(color('primary'), 0.1);
+      border-radius: 50%;
+      
+      [data-theme='dark'] & {
+        background-color: rgba(color('primary'), 0.2);
+      }
+    }
+    
+    .statInfo {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .statNumber {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: color('primary');
+    }
+    
+    .statLabel {
+      font-size: 0.85rem;
+      color: theme-color($light-theme, 'text-light');
+      
+      [data-theme='dark'] & {
+        color: theme-color($dark-theme, 'text-light');
+      }
+    }
+  }
+}
+
+// Featured Author Widget
+.featuredAuthor {
+  background-color: theme-color($light-theme, 'surface');
+  border-radius: 16px;
+  padding: $spacing-md;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  [data-theme='dark'] & {
+    background-color: theme-color($dark-theme, 'surface');
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    
+    &:hover {
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: $spacing-md;
+    font-weight: 600;
+    position: relative;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 40px;
+      height: 3px;
+      background-color: color('primary');
+    }
+  }
+  
+  .authorCard {
+    display: flex;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+  }
+  
+  .authorAvatar {
+    margin-right: $spacing-sm;
+    
+    .avatar {
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid color('primary');
+    }
+  }
+  
+  .authorInfo {
+    h4 {
+      margin: 0 0 $spacing-xs 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: theme-color($light-theme, 'text-light');
+      
+      [data-theme='dark'] & {
+        color: theme-color($dark-theme, 'text-light');
+      }
+    }
+  }
+  
+  .authorBio {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: $spacing-sm 0;
+    color: theme-color($light-theme, 'text');
+    
+    [data-theme='dark'] & {
+      color: theme-color($dark-theme, 'text');
+    }
+  }
+  
+  .viewProfileLink {
+    display: inline-block;
+    color: color('primary');
+    font-weight: 500;
+    text-decoration: none;
+    margin-top: $spacing-sm;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    
+    &:hover {
+      color: color('secondary');
+      text-decoration: underline;
+    }
+  }
+}
+
+// Pagination styling
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: $spacing-lg;
+  gap: $spacing-md;
+  
+  @include respond-to('mobile') {
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+  
+  .pageNumbers {
+    display: flex;
+    gap: $spacing-xs;
+  }
+  
+  .pageNumber {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid theme-color($light-theme, 'card-border');
+    background-color: theme-color($light-theme, 'card-bg');
+    color: theme-color($light-theme, 'text');
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(color('primary'), 0.1);
+    }
+    
+    [data-theme='dark'] & {
+      border: 1px solid theme-color($dark-theme, 'card-border');
+      background-color: theme-color($dark-theme, 'card-bg');
+      color: theme-color($dark-theme, 'text');
+      
+      &:hover {
+        background-color: rgba(color('primary'), 0.3);
+      }
+    }
+  }
+  
+  .activePage {
+    background-color: color('primary');
+    color: white;
+    border-color: color('primary');
+    
+    &:hover {
+      background-color: color('primary');
+    }
+    
+    [data-theme='dark'] & {
+      background-color: color('primary');
+      color: white;
+      border-color: color('primary');
+      
+      &:hover {
+        background-color: color('primary');
+      }
+    }
+  }
+  
+  .paginationButton {
+    padding: $spacing-sm $spacing-md;
+    border-radius: 8px;
+    border: 1px solid theme-color($light-theme, 'card-border');
+    background-color: theme-color($light-theme, 'card-bg');
+    color: theme-color($light-theme, 'text');
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(color('primary'), 0.1);
+    }
+    
+    [data-theme='dark'] & {
+      border: 1px solid theme-color($dark-theme, 'card-border');
+      background-color: theme-color($dark-theme, 'card-bg');
+      color: theme-color($dark-theme, 'text');
+      
+      &:hover {
+        background-color: rgba(color('primary'), 0.3);
+      }
+    }
+  }
+  
+  .disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    
+    &:hover {
+      background-color: theme-color($light-theme, 'card-bg');
+      
+      [data-theme='dark'] & {
+        background-color: theme-color($dark-theme, 'card-bg');
+      }
+    }
+  }
+}

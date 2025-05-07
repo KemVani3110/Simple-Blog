@@ -1,0 +1,100 @@
+// Theme color palettes
+$light-theme: (
+  "bg": #f5f7f7,
+  // Nền xám trắng nhẹ nhàng hơn
+  "text": #4a5568,
+  // Màu chữ xám đen nhẹ hơn, không quá tương phản
+  "card-bg": #ffffff,
+  // Giữ nguyên màu trắng cho card
+  "card-border": #e8eeef,
+  // Border nhẹ nhàng
+  "navbar-bg": #f9fafb,
+  // Màu navbar nhẹ nhàng
+  "footer-bg": #f0f4f5,
+  // Màu footer hơi xanh xám nhẹ
+  "surface": #fbfbfc,
+  // Màu bề mặt phụ
+  "shadow": rgba(190, 205, 210, 0.2) // Màu shadow nhẹ nhàng,
+);
+
+$dark-theme: (
+  "bg": #242b38,
+  // Xanh đen nhẹ nhàng hơn, không quá tối
+  "text": #dce3e9,
+  // Màu chữ trắng xám ấm hơn
+  "card-bg": #2a3442,
+  // Màu card nhẹ nhàng hơn
+  "card-border": #3a4555,
+  // Border nhẹ hơn
+  "navbar-bg": #2d3545,
+  // Navbar nhẹ hơn
+  "footer-bg": #232a37,
+  // Footer nhẹ hơn
+  "surface": #313c4d,
+  // Màu bề mặt phụ
+  "shadow": rgba(12, 16, 24, 0.3) // Màu shadow nhẹ,
+);
+
+// Brand colors (shared between themes)
+$colors: (
+  "primary": #7badde,
+  // Màu xanh dương nhẹ nhàng
+  "secondary": #a6b0d8,
+  // Màu tím lavender nhạt
+  "accent": #e2b886,
+  // Màu cam đất nhẹ
+  "muted": #b5c4c9,
+  // Màu xanh xám nhẹ
+  "sage": #c2d6c7,
+  // Màu xanh lá nhạt
+  "blush": #e6c9c9,
+  // Màu hồng phấn
+  "sky": #c6dde8,
+  // Màu xanh da trời nhạt
+  "sand": #e5dcc7 // Màu cát nhẹ,
+);
+
+// Function to get color values from themes
+@function theme-color($theme, $key) {
+  @return map-get($theme, $key);
+}
+
+@function color($key) {
+  @return map-get($colors, $key);
+}
+
+// Breakpoints for responsive design
+$breakpoints: (
+  "mobile": 576px,
+  "tablet": 768px,
+  "desktop": 1024px,
+  "large": 1280px,
+);
+
+// Mixins for responsive design
+@mixin respond-to($breakpoint) {
+  $value: map-get($breakpoints, $breakpoint);
+
+  @if $value != null {
+    @media (max-width: $value) {
+      @content;
+    }
+  } @else {
+    @warn "Không tìm thấy giá trị `#{$breakpoint}` trong $breakpoints.";
+  }
+}
+
+// Spacing
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 2rem;
+$spacing-xl: 4rem;
+
+// Layout variables
+$container-padding: 1rem;
+$grid-gap: 1.5rem;
+$card-spacing: 1rem;
+$header-height: 4rem;
+$footer-padding: 2rem 0;
+$footer-height: 2rem;

@@ -1,0 +1,129 @@
+@import '@/styles/variables';
+
+.navbar {
+  height: $header-height;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: theme-color($light-theme, 'shadow');
+  background-color: theme-color($light-theme, 'navbar-bg');
+  border-bottom: 1px solid theme-color($light-theme, 'card-border');
+
+  .navContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 $container-padding;
+  }
+
+  [data-theme="dark"] & {
+    background-color: theme-color($dark-theme, 'navbar-bg');
+    border-bottom-color: theme-color($dark-theme, 'card-border');
+    box-shadow: theme-color($dark-theme, 'shadow');
+    color: theme-color($dark-theme,'text')
+  }
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  color: color('primary');
+
+  svg{
+    margin-right: 0.5rem;
+  }
+}
+
+.navLinks{
+  display: flex;
+  list-style: none;
+
+  li{
+    margin-left: 1.5rem;
+
+    a{
+      font-weight: 500;
+
+      &:hover{
+        color: color('secondary') ;
+      }
+    }
+  }
+}
+
+.mobileMenuButton {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font-size: 1.5rem;
+  
+  @include respond-to('tablet') {
+    display: block;
+  }
+}
+
+.mobileMenu {
+  display: none;
+  position: absolute;
+  top: $header-height;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  
+  &[data-theme="light"] {
+    background-color: theme-color(
+      $light-theme,
+      'navbar-bg'
+    );
+  }
+  
+  &[data-theme="dark"] {
+    background-color: theme-color(
+      $dark-theme,
+      'navbar-bg'
+    );
+  }
+  
+  &.active {
+    display: block;
+  }
+  
+  ul {
+    list-style: none;
+    
+    li {
+      margin-bottom: 1rem;
+      
+      a {
+        display: block;
+        padding: 0.5rem 0;
+      }
+    }
+  }
+}
+
+@include respond-to('tablet') {
+  .navLinks {
+    display: none;
+  }
+}
+
+.toggleBtn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: color('accent');
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: color('secondary');
+  }
+}

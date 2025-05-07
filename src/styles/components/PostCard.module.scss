@@ -1,0 +1,146 @@
+@import "@/styles/variables";
+@import "@/styles/mixins";
+
+.card {
+  background-color: theme-color($light-theme, 'card-bg');
+  color: theme-color($light-theme, 'text');
+  border: 1px solid theme-color($light-theme, 'card-border');
+  
+  [data-theme='dark'] & {
+    background-color: theme-color($dark-theme, 'card-bg');
+    color: theme-color($dark-theme, 'text');
+    border: 1px solid theme-color($dark-theme, 'card-border');
+  }
+  
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 4px 16px theme-color($light-theme, 'shadow');
+  transition: transform 0.2s, background-color 0.3s;
+  display: flex;
+  flex-direction: column;
+  
+  [data-theme='dark'] & {
+    box-shadow: 0 4px 16px theme-color($dark-theme, 'shadow');
+  }
+  
+  &:hover {
+    box-shadow: 0 10px 20px theme-color($light-theme, 'shadow');
+    transform: translateY(-5px);
+    
+    [data-theme='dark'] & {
+      box-shadow: 0 10px 20px theme-color($dark-theme, 'shadow');
+    }
+  }
+}
+
+.thumbnailLink {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+  background-color: theme-color($light-theme, 'surface');
+  
+  [data-theme='dark'] & {
+    background-color: theme-color($dark-theme, 'surface');
+  }
+}
+
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  
+  .card:hover & {
+    transform: scale(1.05);
+  }
+}
+
+.content {
+  padding: $spacing-md;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  
+  .title {
+    font-size: 1.2rem;
+    margin-bottom: $spacing-sm;
+    font-weight: 600;
+    color: map-get($colors, 'sage');
+    
+    a {
+      text-decoration: none;
+      transition: color 0.3s;
+      
+      &:hover {
+        color: map-get($colors, 'primary');
+      }
+    }
+  }
+  
+  .excerpt {
+    font-size: 0.95rem;
+    flex-grow: 1;
+    margin-bottom: $spacing-md;
+  }
+  
+  .meta {
+    font-size: 0.85rem;
+    color: map-get($colors, 'secondary');
+    margin-bottom: $spacing-sm;
+  }
+  
+  .author {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    
+    img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+    }
+    
+    p {
+      font-size: 0.8rem;
+      color: map-get($colors, 'secondary');
+    }
+    
+    span {
+      font-size: 1rem;
+      color: map-get($colors, 'primary');
+    }
+  }
+}
+
+.readMore {
+  @include button-outline;
+  font-size: 0.9rem;
+  padding: $spacing-xs $spacing-sm;
+  align-self: flex-start;
+  color: map-get($colors, 'primary');
+  border-color: map-get($colors, 'primary');
+  
+  &:hover {
+    background-color: map-get($colors, 'primary');
+    color: white;
+  }
+}
+
+@include respond-to('tablet') {
+  .thumbnailLink {
+    height: 160px;
+  }
+  
+  .content {
+    padding: $spacing-sm;
+  }
+}
+
+@include respond-to('mobile') {
+  .thumbnailLink {
+    height: 140px;
+  }
+}

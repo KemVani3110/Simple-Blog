@@ -1,0 +1,218 @@
+@import "@/styles/variables";
+@import "@/styles/mixins";
+
+.blogPost {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: $spacing-lg $spacing-md;
+  animation: fadeIn 0.6s ease-out;
+  color: theme-color($light-theme, "text");
+  background-color: theme-color($light-theme, "card-bg");
+  border-radius: 12px;
+  box-shadow: 0 5px 20px theme-color($light-theme, "shadow");
+  
+  @include respond-to('tablet') {
+    padding: $spacing-md;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  [data-theme="dark"] &{
+    background-color: theme-color($dark-theme, "card-bg");
+    color: theme-color($dark-theme, "text");
+    box-shadow: 0 5px 20px theme-color($dark-theme, "shadow");
+    
+    .postContent {
+      border-bottom-color: theme-color($dark-theme, "card-border");
+      
+      div p:last-child {
+        color: theme-color($dark-theme, "text");
+      }
+    }
+    
+    .content {
+      blockquote {
+        color: theme-color($dark-theme, "text");
+      }
+      
+      code, pre {
+        background-color: theme-color($dark-theme, "surface");
+      }
+    }
+  }
+}
+
+.postHeader {
+  margin-bottom: $spacing-xl;
+  text-align: center;
+  position: relative;
+
+  h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: $spacing-md;
+    line-height: 1.2;
+    color: color("primary");
+    
+    @include respond-to('mobile') {
+      font-size: 2rem;
+    }
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, color("primary"), color("secondary"));
+    margin: $spacing-md auto 0;
+    border-radius: 2px;
+  }
+}
+
+.postContent {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-lg;
+  padding-bottom: $spacing-md;
+  border-bottom: 1px solid theme-color($light-theme, "card-border");
+  
+  img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: $spacing-md;
+    border: 3px solid color("secondary");
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  div {
+    p:first-child {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: $spacing-xs;
+      color: color("primary");
+    }
+    
+    p:last-child {
+      font-size: 0.9rem;
+      color: theme-color($light-theme, "text");
+      opacity: 0.8;
+    }
+  }
+}
+
+.content {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  margin-bottom: $spacing-xl;
+  
+  h2 {
+    font-size: 1.8rem;
+    margin: $spacing-lg 0 $spacing-md;
+    color: color("primary");
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    margin: $spacing-lg 0 $spacing-md;
+    color: color("secondary");
+  }
+  
+  p {
+    margin-bottom: $spacing-md;
+  }
+  
+  img {
+    width: 100%;
+    border-radius: 8px;
+    margin: $spacing-lg 0;
+  }
+  
+  blockquote {
+    border-left: 4px solid color("accent");
+    padding-left: $spacing-md;
+    margin: $spacing-md 0;
+    font-style: italic;
+    color: theme-color($light-theme, "text");
+    opacity: 0.9;
+  }
+  
+  code {
+    background-color: theme-color($light-theme, "surface");
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9em;
+  }
+  
+  pre {
+    background-color: theme-color($light-theme, "surface");
+    padding: $spacing-md;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: $spacing-md 0;
+    
+    code {
+      background-color: transparent;
+      padding: 0;
+    }
+  }
+  
+  ul, ol {
+    margin-left: $spacing-lg;
+    margin-bottom: $spacing-md;
+    
+    li {
+      margin-bottom: $spacing-xs;
+    }
+  }
+  
+  a {
+    color: color("primary");
+    text-decoration: underline;
+    transition: color 0.2s;
+    
+    &:hover {
+      color: color("secondary");
+    }
+  }
+}
+
+.backLink {
+  display: inline-block;
+  margin-top: $spacing-lg;
+  padding: $spacing-sm $spacing-lg;
+  font-size: 1rem;
+  font-weight: 500;
+  color: color("primary");
+  background-color: transparent;
+  border: 2px solid color("primary");
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-align: center;
+  
+  &:hover {
+    background-color: color("primary");
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(123, 173, 222, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+

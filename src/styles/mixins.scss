@@ -1,0 +1,49 @@
+@import "@/styles/variables";
+
+// Base button style
+@mixin button-base {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+// Primary button
+@mixin button-primary {
+  @include button-base;
+  background-color: color("primary");
+  color: white;
+
+  &:hover {
+    background-color: darken(color("primary"), 10%);
+    color: white;
+  }
+}
+
+// Secondary button
+@mixin button-secondary {
+  @include button-base;
+  background-color: color("secondary");
+  color: white;
+
+  &:hover {
+    background-color: darken(color("secondary"), 10%);
+    color: white;
+  }
+}
+
+// Outline button
+@mixin button-outline {
+  @include button-base;
+  background-color: transparent;
+  border: 1px solid color("primary");
+  color: color("primary");
+
+  &:hover {
+    background-color: color("primary");
+    color: white;
+  }
+}
