@@ -193,7 +193,6 @@
     overflow-y: auto;
     padding-right: $spacing-sm;
     
-    /* Custom scrollbar for tagsFilter */
     &::-webkit-scrollbar {
       width: 6px;
     }
@@ -360,7 +359,6 @@
   }
 }
 
-// Apply this class to your PostCard component for animation
 .postCard {
   animation: fadeInUp 0.6s ease-out forwards;
   animation-fill-mode: both;

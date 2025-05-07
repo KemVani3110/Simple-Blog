@@ -55,7 +55,7 @@ export default function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Kiểm tra dữ liệu form
+    // Check if all required fields are filled
     if (!formData.name || !formData.email || !formData.message) {
       setFormStatus({
         message: "Vui lòng điền đầy đủ thông tin bắt buộc",
@@ -64,15 +64,14 @@ export default function Contact() {
       return;
     }
 
-    // Giả lập gửi form thành công
-    // Trong thực tế, bạn sẽ gửi dữ liệu đến API hoặc service
+    // Simulate form submission
     setTimeout(() => {
       setFormStatus({
         message: "Cảm ơn! Tin nhắn của bạn đã được gửi thành công.",
         type: "success",
       });
 
-      // Reset form sau khi gửi thành công
+      // Reset form after submission
       setFormData({
         name: "",
         email: "",
@@ -80,7 +79,7 @@ export default function Contact() {
         message: "",
       });
 
-      // Xóa thông báo sau 5 giây
+      // Delete message after 5 seconds
       setTimeout(() => {
         setFormStatus({
           message: "",
@@ -267,12 +266,8 @@ export default function Contact() {
           <section className={styles.mapSection}>
             <h2>Bản đồ</h2>
             <div className={styles.mapContainer}>
-              {/* Trong thực tế, bạn sẽ sử dụng thư viện như Google Maps hoặc Leaflet ở đây */}
               <div className={styles.mapPlaceholder}>
-                <p>
-                  Bản đồ sẽ được hiển thị ở đây. Trong dự án thực tế, bạn có thể
-                  tích hợp Google Maps hoặc Leaflet.
-                </p>
+                <p>Bản đồ sẽ được hiển thị ở đây nè.</p>
               </div>
             </div>
           </section>
