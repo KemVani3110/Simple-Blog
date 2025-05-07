@@ -33,11 +33,16 @@ const PostDetail: NextPage<Props> = ({ post }) => {
       </header>
 
       <div className={styles.postContent}>
-        <Image width={50} height={50} src={post.author.avatar} alt={post.author.name} />
+        <Image
+          width={60}
+          height={60}
+          src={post.author.avatar}
+          alt={post.author.name}
+        />
         <div>
           <p>{post.author.name}</p>
           <p>
-            {post.date} - {post.readTime} phút đọc
+            {post.date} - {post.readTime} đọc
           </p>
         </div>
       </div>

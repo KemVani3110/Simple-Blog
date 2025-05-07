@@ -1,10 +1,10 @@
-import '@/styles/globals.scss'
-import '@/lib/fontawesome'
-import type { AppProps } from 'next/app'
-import { config } from '@fortawesome/fontawesome-svg-core'
-import '@fortawesome/fontawesome-svg-core/styles.css'
+import "@/styles/globals.scss";
+import "@/lib/fontawesome";
+import type { AppProps } from "next/app";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
-config.autoAddCss = false
+config.autoAddCss = false;
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -13,5 +13,5 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </main>
     </>
-  )
+  );
 }

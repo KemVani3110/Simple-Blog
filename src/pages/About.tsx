@@ -5,7 +5,12 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLeaf, faBook, faPen, faUsers } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLeaf,
+  faBook,
+  faPen,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function About() {
   const [mounted, setMounted] = useState(false);
@@ -22,7 +27,10 @@ export default function About() {
     <>
       <Head>
         <title>Giới thiệu - Next Blog</title>
-        <meta name="description" content="Thông tin về Next Blog và đội ngũ phát triển của chúng tôi" />
+        <meta
+          name="description"
+          content="Thông tin về Next Blog và đội ngũ phát triển của chúng tôi"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -48,18 +56,21 @@ export default function About() {
                 />
               </div>
             </div>
-            
+
             <div className={styles.textContent}>
               <h2>Câu chuyện của chúng tôi</h2>
               <p>
-                Next Blog được thành lập vào năm 2023 với mục tiêu tạo ra một không gian chia sẻ kiến thức và 
-                kinh nghiệm về công nghệ, lập trình và thiết kế web. Chúng tôi tin rằng việc chia sẻ 
-                kiến thức là cách tốt nhất để phát triển cộng đồng và giúp đỡ những người mới bắt đầu.
+                Next Blog được thành lập vào năm 2023 với mục tiêu tạo ra một
+                không gian chia sẻ kiến thức và kinh nghiệm về công nghệ, lập
+                trình và thiết kế web. Chúng tôi tin rằng việc chia sẻ kiến thức
+                là cách tốt nhất để phát triển cộng đồng và giúp đỡ những người
+                mới bắt đầu.
               </p>
               <p>
-                Với đội ngũ gồm các chuyên gia trong nhiều lĩnh vực khác nhau, chúng tôi luôn nỗ lực mang đến 
-                những bài viết chất lượng, cập nhật các xu hướng mới nhất trong thế giới công nghệ và 
-                phát triển web.
+                Với đội ngũ gồm các chuyên gia trong nhiều lĩnh vực khác nhau,
+                chúng tôi luôn nỗ lực mang đến những bài viết chất lượng, cập
+                nhật các xu hướng mới nhất trong thế giới công nghệ và phát
+                triển web.
               </p>
             </div>
           </section>
@@ -72,31 +83,43 @@ export default function About() {
                   <FontAwesomeIcon icon={faLeaf} />
                 </div>
                 <h3>Đổi mới</h3>
-                <p>Chúng tôi không ngừng tìm kiếm những ý tưởng và công nghệ mới để chia sẻ với cộng đồng.</p>
+                <p>
+                  Chúng tôi không ngừng tìm kiếm những ý tưởng và công nghệ mới
+                  để chia sẻ với cộng đồng.
+                </p>
               </div>
-              
+
               <div className={styles.valueCard}>
                 <div className={styles.valueIcon}>
                   <FontAwesomeIcon icon={faBook} />
                 </div>
                 <h3>Học hỏi</h3>
-                <p>Chúng tôi tin rằng việc học tập là hành trình không bao giờ kết thúc, và chúng tôi luôn sẵn sàng học hỏi.</p>
+                <p>
+                  Chúng tôi tin rằng việc học tập là hành trình không bao giờ
+                  kết thúc, và chúng tôi luôn sẵn sàng học hỏi.
+                </p>
               </div>
-              
+
               <div className={styles.valueCard}>
                 <div className={styles.valueIcon}>
                   <FontAwesomeIcon icon={faPen} />
                 </div>
                 <h3>Chất lượng</h3>
-                <p>Mỗi bài viết đều được nghiên cứu kỹ lưỡng và biên tập cẩn thận để đảm bảo tính chính xác và hữu ích.</p>
+                <p>
+                  Mỗi bài viết đều được nghiên cứu kỹ lưỡng và biên tập cẩn thận
+                  để đảm bảo tính chính xác và hữu ích.
+                </p>
               </div>
-              
+
               <div className={styles.valueCard}>
                 <div className={styles.valueIcon}>
                   <FontAwesomeIcon icon={faUsers} />
                 </div>
                 <h3>Cộng đồng</h3>
-                <p>Chúng tôi xây dựng một cộng đồng mạnh mẽ và hỗ trợ lẫn nhau trong hành trình phát triển.</p>
+                <p>
+                  Chúng tôi xây dựng một cộng đồng mạnh mẽ và hỗ trợ lẫn nhau
+                  trong hành trình phát triển.
+                </p>
               </div>
             </div>
           </section>
@@ -116,7 +139,7 @@ export default function About() {
                 <h3>Huỳnh Chu Minh Khôi</h3>
                 <p>Founder & CEO</p>
               </div>
-              
+
               <div className={styles.teamMember}>
                 <div className={styles.memberImage}>
                   <Image
@@ -129,7 +152,7 @@ export default function About() {
                 <h3>Huỳnh Chu Minh Khôi</h3>
                 <p>Lead Developer</p>
               </div>
-              
+
               <div className={styles.teamMember}>
                 <div className={styles.memberImage}>
                   <Image
@@ -142,7 +165,7 @@ export default function About() {
                 <h3>Huỳnh Chu Minh Khôi</h3>
                 <p>Content Editor</p>
               </div>
-              
+
               <div className={styles.teamMember}>
                 <div className={styles.memberImage}>
                   <Image

@@ -1,4 +1,4 @@
-@import '@/styles/variables';
+@import "@/styles/variables";
 
 .navbar {
   height: $header-height;
@@ -6,9 +6,9 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: theme-color($light-theme, 'shadow');
-  background-color: theme-color($light-theme, 'navbar-bg');
-  border-bottom: 1px solid theme-color($light-theme, 'card-border');
+  box-shadow: theme-color($light-theme, "shadow");
+  background-color: theme-color($light-theme, "navbar-bg");
+  border-bottom: 1px solid theme-color($light-theme, "card-border");
 
   .navContainer {
     display: flex;
@@ -19,10 +19,10 @@
   }
 
   [data-theme="dark"] & {
-    background-color: theme-color($dark-theme, 'navbar-bg');
-    border-bottom-color: theme-color($dark-theme, 'card-border');
-    box-shadow: theme-color($dark-theme, 'shadow');
-    color: theme-color($dark-theme,'text')
+    background-color: theme-color($dark-theme, "navbar-bg");
+    border-bottom-color: theme-color($dark-theme, "card-border");
+    box-shadow: theme-color($dark-theme, "shadow");
+    color: theme-color($dark-theme, "text");
   }
 }
 
@@ -31,25 +31,25 @@
   font-weight: bold;
   display: flex;
   align-items: center;
-  color: color('primary');
+  color: color("primary");
 
-  svg{
+  svg {
     margin-right: 0.5rem;
   }
 }
 
-.navLinks{
+.navLinks {
   display: flex;
   list-style: none;
 
-  li{
+  li {
     margin-left: 1.5rem;
 
-    a{
+    a {
       font-weight: 500;
 
-      &:hover{
-        color: color('secondary') ;
+      &:hover {
+        color: color("secondary");
       }
     }
   }
@@ -62,8 +62,8 @@
   cursor: pointer;
   color: inherit;
   font-size: 1.5rem;
-  
-  @include respond-to('tablet') {
+
+  @include respond-to("tablet") {
     display: block;
   }
 }
@@ -76,31 +76,25 @@
   width: 100%;
   padding: 1rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  
+
   &[data-theme="light"] {
-    background-color: theme-color(
-      $light-theme,
-      'navbar-bg'
-    );
+    background-color: theme-color($light-theme, "navbar-bg");
   }
-  
+
   &[data-theme="dark"] {
-    background-color: theme-color(
-      $dark-theme,
-      'navbar-bg'
-    );
+    background-color: theme-color($dark-theme, "navbar-bg");
   }
-  
+
   &.active {
     display: block;
   }
-  
+
   ul {
     list-style: none;
-    
+
     li {
       margin-bottom: 1rem;
-      
+
       a {
         display: block;
         padding: 0.5rem 0;
@@ -109,7 +103,7 @@
   }
 }
 
-@include respond-to('tablet') {
+@include respond-to("tablet") {
   .navLinks {
     display: none;
   }
@@ -119,11 +113,11 @@
   background: none;
   border: none;
   font-size: 1.25rem;
-  color: color('accent');
+  color: color("accent");
   cursor: pointer;
   transition: color 0.3s ease;
 
   &:hover {
-    color: color('secondary');
+    color: color("secondary");
   }
 }

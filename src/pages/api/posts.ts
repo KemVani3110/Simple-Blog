@@ -644,7 +644,6 @@ const posts = [
     },
     tags: ['Next.js', 'Font Awesome', 'UI']
   }
-
 ]
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {

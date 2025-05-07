@@ -1,14 +1,14 @@
-@import '@/styles/variables';
+@import "@/styles/variables";
 
 // Footer styling
 .footer {
-  background-color: theme-color($light-theme, 'footer-bg');
+  background-color: theme-color($light-theme, "footer-bg");
   padding: $footer-padding;
-  color: theme-color($light-theme, 'text');
-  
+  color: theme-color($light-theme, "text");
+
   [data-theme="dark"] & {
-    background-color: theme-color($dark-theme, 'footer-bg');
-    color: theme-color($dark-theme, 'text');
+    background-color: theme-color($dark-theme, "footer-bg");
+    color: theme-color($dark-theme, "text");
   }
 }
 
@@ -18,12 +18,12 @@
   grid-template-columns: repeat(1, 1fr);
   gap: $grid-gap;
   margin-bottom: $spacing-lg;
-  
-  @media (min-width: map-get($breakpoints, 'mobile')) {
+
+  @media (min-width: map-get($breakpoints, "mobile")) {
     grid-template-columns: repeat(2, 1fr);
   }
-  
-  @media (min-width: map-get($breakpoints, 'desktop')) {
+
+  @media (min-width: map-get($breakpoints, "desktop")) {
     grid-template-columns: repeat(4, 1fr);
   }
 }
@@ -39,25 +39,25 @@
 .footerTitle {
   font-size: 1.2rem;
   font-weight: 600;
-  color: color('primary');
+  color: color("primary");
   position: relative;
   padding-bottom: $spacing-sm;
-  
+
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     bottom: 0;
     width: 50px;
     height: 2px;
-    background-color: color('primary');
+    background-color: color("primary");
   }
-  
+
   [data-theme="dark"] & {
-    color: color('primary');
-    
+    color: color("primary");
+
     &::after {
-      background-color: color('primary');
+      background-color: color("primary");
     }
   }
 }
@@ -66,10 +66,10 @@
 .footerDesc {
   margin-bottom: $spacing-lg;
   line-height: 1.6;
-  color: theme-color($light-theme, 'text');
-  
+  color: theme-color($light-theme, "text");
+
   [data-theme="dark"] & {
-    color: theme-color($dark-theme, 'text');
+    color: theme-color($dark-theme, "text");
   }
 }
 
@@ -77,7 +77,7 @@
 .socialLinks {
   display: flex;
   gap: $spacing-md;
-  
+
   a {
     display: flex;
     align-items: center;
@@ -85,22 +85,22 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background-color: color('primary');
-    color: theme-color($light-theme, 'card-bg');
+    background-color: color("primary");
+    color: theme-color($light-theme, "card-bg");
     font-size: 0.9rem;
     transition: all 0.3s ease;
-    
+
     &:hover {
-      background-color: color('secondary');
+      background-color: color("secondary");
       transform: translateY(-3px);
     }
-    
+
     [data-theme="dark"] & {
-      background-color: color('primary');
-      color: theme-color($dark-theme, 'bg');
-      
+      background-color: color("primary");
+      color: theme-color($dark-theme, "bg");
+
       &:hover {
-        background-color: color('secondary');
+        background-color: color("secondary");
       }
     }
   }
@@ -111,26 +111,26 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  
+
   li {
     margin-bottom: $spacing-sm;
-    
+
     a {
-      color: theme-color($light-theme, 'text');
+      color: theme-color($light-theme, "text");
       text-decoration: none;
       transition: color 0.3s ease, transform 0.3s ease;
       display: inline-block;
-      
+
       &:hover {
-        color: color('primary');
+        color: color("primary");
         transform: translateX(5px);
       }
-      
+
       [data-theme="dark"] & {
-        color: theme-color($dark-theme, 'text');
-        
+        color: theme-color($dark-theme, "text");
+
         &:hover {
-          color: color('primary');
+          color: color("primary");
         }
       }
     }
@@ -142,27 +142,27 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  
+
   li {
     display: flex;
     align-items: flex-start;
     margin-bottom: $spacing-md;
-    color: theme-color($light-theme, 'text');
-    
+    color: theme-color($light-theme, "text");
+
     [data-theme="dark"] & {
-      color: theme-color($dark-theme, 'text');
+      color: theme-color($dark-theme, "text");
     }
-    
+
     svg {
       margin-right: $spacing-sm;
-      color: color('primary');
+      color: color("primary");
       margin-top: 4px;
-      
+
       [data-theme="dark"] & {
-        color: color('primary');
+        color: color("primary");
       }
     }
-    
+
     span {
       line-height: 1.5;
     }
@@ -172,30 +172,30 @@
 // Footer bottom section (copyright)
 .footerBottom {
   padding-top: $spacing-lg;
-  border-top: 1px solid theme-color($light-theme, 'card-border');
+  border-top: 1px solid theme-color($light-theme, "card-border");
   text-align: center;
-  color: theme-color($light-theme, 'text');
+  color: theme-color($light-theme, "text");
   font-size: 0.9rem;
-  
+
   p {
     margin-bottom: $spacing-xs;
   }
-  
+
   a {
-    color: color('primary');
+    color: color("primary");
     text-decoration: none;
-    
+
     &:hover {
       text-decoration: underline;
     }
-    
+
     [data-theme="dark"] & {
-      color: color('primary');
+      color: color("primary");
     }
   }
-  
+
   [data-theme="dark"] & {
-    border-color: theme-color($dark-theme, 'card-border');
-    color: theme-color($dark-theme, 'text');
+    border-color: theme-color($dark-theme, "card-border");
+    color: theme-color($dark-theme, "text");
   }
 }

@@ -5,12 +5,10 @@ import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { faBlog, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-
 export default function Navbar() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-
 
   useEffect(() => {
     setMounted(true);
@@ -87,10 +85,7 @@ export default function Navbar() {
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/Blogs"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
+                <Link href="/Blogs" onClick={() => setMobileMenuOpen(false)}>
                   Bài viết
                 </Link>
               </li>

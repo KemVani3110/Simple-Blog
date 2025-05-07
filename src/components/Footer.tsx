@@ -1,16 +1,16 @@
 import styles from "@/styles/components/Footer.module.scss";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { 
-  faFacebookF, 
-  faTwitter, 
-  faInstagram, 
-  faLinkedinIn 
+import {
+  faFacebookF,
+  faTwitter,
+  faInstagram,
+  faLinkedinIn,
 } from "@fortawesome/free-brands-svg-icons";
-import { 
-  faEnvelope, 
-  faPhone, 
-  faMapMarkerAlt 
+import {
+  faEnvelope,
+  faPhone,
+  faMapMarkerAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Footer() {
@@ -23,25 +23,41 @@ export default function Footer() {
           <div className={styles.footerSection}>
             <h3 className={styles.footerTitle}>Next Blog</h3>
             <p className={styles.footerDesc}>
-              Chia sẻ kiến thức, kinh nghiệm về công nghệ, lập trình và thiết kế web.
-              Cùng nhau học hỏi và phát triển.
+              Chia sẻ kiến thức, kinh nghiệm về công nghệ, lập trình và thiết kế
+              web. Cùng nhau học hỏi và phát triển.
             </p>
             <div className={styles.socialLinks}>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FontAwesomeIcon icon={faFacebookF} />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FontAwesomeIcon icon={faTwitter} />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FontAwesomeIcon icon={faInstagram} />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FontAwesomeIcon icon={faLinkedinIn} />
               </a>
             </div>
           </div>
-          
+
           <div className={styles.footerSection}>
             <h3 className={styles.footerTitle}>Links Nhanh</h3>
             <ul className={styles.footerLinks}>
@@ -62,7 +78,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          
+
           <div className={styles.footerSection}>
             <h3 className={styles.footerTitle}>Chủ Đề</h3>
             <ul className={styles.footerLinks}>
@@ -83,7 +99,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          
+
           <div className={styles.footerSection}>
             <h3 className={styles.footerTitle}>Liên Hệ</h3>
             <ul className={styles.contactInfo}>
@@ -102,7 +118,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        
+
         <div className={styles.footerBottom}>
           <p>&copy; {currentYear} Next Blog. Tất cả các quyền được bảo lưu.</p>
           <p>

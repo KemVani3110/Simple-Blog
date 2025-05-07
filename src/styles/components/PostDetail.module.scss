@@ -10,11 +10,11 @@
   background-color: theme-color($light-theme, "card-bg");
   border-radius: 12px;
   box-shadow: 0 5px 20px theme-color($light-theme, "shadow");
-  
-  @include respond-to('tablet') {
+
+  @include respond-to("tablet") {
     padding: $spacing-md;
   }
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -26,25 +26,26 @@
     }
   }
 
-  [data-theme="dark"] &{
+  [data-theme="dark"] & {
     background-color: theme-color($dark-theme, "card-bg");
     color: theme-color($dark-theme, "text");
     box-shadow: 0 5px 20px theme-color($dark-theme, "shadow");
-    
+
     .postContent {
       border-bottom-color: theme-color($dark-theme, "card-border");
-      
+
       div p:last-child {
         color: theme-color($dark-theme, "text");
       }
     }
-    
+
     .content {
       blockquote {
         color: theme-color($dark-theme, "text");
       }
-      
-      code, pre {
+
+      code,
+      pre {
         background-color: theme-color($dark-theme, "surface");
       }
     }
@@ -62,8 +63,8 @@
     margin-bottom: $spacing-md;
     line-height: 1.2;
     color: color("primary");
-    
-    @include respond-to('mobile') {
+
+    @include respond-to("mobile") {
       font-size: 2rem;
     }
   }
@@ -85,7 +86,7 @@
   margin-bottom: $spacing-lg;
   padding-bottom: $spacing-md;
   border-bottom: 1px solid theme-color($light-theme, "card-border");
-  
+
   img {
     width: 60px;
     height: 60px;
@@ -95,7 +96,7 @@
     border: 3px solid color("secondary");
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   }
-  
+
   div {
     p:first-child {
       font-weight: 600;
@@ -103,7 +104,7 @@
       margin-bottom: $spacing-xs;
       color: color("primary");
     }
-    
+
     p:last-child {
       font-size: 0.9rem;
       color: theme-color($light-theme, "text");
@@ -116,29 +117,29 @@
   font-size: 1.15rem;
   line-height: 1.8;
   margin-bottom: $spacing-xl;
-  
+
   h2 {
     font-size: 1.8rem;
     margin: $spacing-lg 0 $spacing-md;
     color: color("primary");
   }
-  
+
   h3 {
     font-size: 1.5rem;
     margin: $spacing-lg 0 $spacing-md;
     color: color("secondary");
   }
-  
+
   p {
     margin-bottom: $spacing-md;
   }
-  
+
   img {
     width: 100%;
     border-radius: 8px;
     margin: $spacing-lg 0;
   }
-  
+
   blockquote {
     border-left: 4px solid color("accent");
     padding-left: $spacing-md;
@@ -147,7 +148,7 @@
     color: theme-color($light-theme, "text");
     opacity: 0.9;
   }
-  
+
   code {
     background-color: theme-color($light-theme, "surface");
     padding: 2px 4px;
@@ -155,34 +156,35 @@
     font-family: monospace;
     font-size: 0.9em;
   }
-  
+
   pre {
     background-color: theme-color($light-theme, "surface");
     padding: $spacing-md;
     border-radius: 8px;
     overflow-x: auto;
     margin: $spacing-md 0;
-    
+
     code {
       background-color: transparent;
       padding: 0;
     }
   }
-  
-  ul, ol {
+
+  ul,
+  ol {
     margin-left: $spacing-lg;
     margin-bottom: $spacing-md;
-    
+
     li {
       margin-bottom: $spacing-xs;
     }
   }
-  
+
   a {
     color: color("primary");
     text-decoration: underline;
     transition: color 0.2s;
-    
+
     &:hover {
       color: color("secondary");
     }
@@ -202,17 +204,15 @@
   text-decoration: none;
   transition: all 0.3s ease;
   text-align: center;
-  
+
   &:hover {
     background-color: color("primary");
     color: white;
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(123, 173, 222, 0.3);
   }
-  
+
   &:active {
     transform: translateY(0);
   }
 }
-
-
