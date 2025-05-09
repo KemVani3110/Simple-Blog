@@ -14,6 +14,7 @@
   padding: $spacing-xl 0;
   gap: $spacing-lg;
   min-height: 500px;
+  animation: fadeIn 1s ease-in-out;
 
   @include respond-to("tablet") {
     flex-direction: column;
@@ -35,6 +36,7 @@
       );
       background-clip: text;
       color: transparent;
+      animation: slideInLeft 0.8s ease-out;
 
       @include respond-to("tablet") {
         font-size: 2.5rem;
@@ -51,6 +53,7 @@
       margin-bottom: $spacing-lg;
       line-height: 1.6;
       max-width: 500px;
+      animation: slideInLeft 0.8s ease-out 0.2s both;
 
       [data-theme="dark"] & {
         color: theme-color($dark-theme, "text");
@@ -67,6 +70,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    animation: slideInRight 0.8s ease-out;
 
     .imagePlaceholder {
       width: 100%;
@@ -77,20 +81,30 @@
       border-radius: 16px;
       box-shadow: 0 15px 30px theme-color($light-theme, "shadow");
       transform: rotate(2deg);
-      transition: transform 0.3s ease;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
 
       &:hover {
         transform: rotate(0);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
       }
 
       [data-theme="dark"] & {
         box-shadow: 0 15px 30px theme-color($dark-theme, "shadow");
+
+        &:hover {
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
       }
 
       img {
         width: 100%;
         height: auto;
         object-fit: cover;
+        transition: transform 0.5s ease;
+
+        &:hover {
+          transform: scale(1.05);
+        }
       }
     }
   }
@@ -99,6 +113,7 @@
     display: flex;
     gap: $spacing-md;
     margin-top: $spacing-lg;
+    animation: slideInLeft 0.8s ease-out 0.4s both;
 
     @include respond-to("mobile") {
       flex-direction: column;
@@ -127,6 +142,11 @@
       width: 50px;
       height: 4px;
       background-color: color("primary");
+      transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+      width: 100px;
     }
 
     @include respond-to("mobile") {
@@ -138,11 +158,14 @@
     color: color("primary");
     font-weight: 500;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: all 0.3s ease;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: 4px;
 
     &:hover {
       color: color("secondary");
       text-decoration: underline;
+      background-color: rgba(color("primary"), 0.1);
     }
   }
 }
@@ -150,6 +173,7 @@
 // Featured posts section
 .featuredPosts {
   margin: $spacing-xl 0;
+  animation: fadeIn 1s ease-in-out 0.2s both;
 }
 
 .featuredGrid {
@@ -179,6 +203,8 @@
 // Latest posts section
 .latestPosts {
   margin: $spacing-xl 0;
+  scroll-margin-top: 80px; // For smooth scrolling when pagination is clicked
+  animation: fadeIn 1s ease-in-out 0.4s both;
 }
 
 .postsGrid {
@@ -191,6 +217,30 @@
   }
 }
 
+// Related Posts Section
+.relatedPosts {
+  margin: $spacing-xl 0;
+  animation: fadeIn 1s ease-in-out 0.4s both;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-lg;
+
+  @include respond-to("mobile") {
+    grid-template-columns: 1fr;
+  }
+
+  .relatedCard {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+}
+
 // Newsletter section
 .newsletter {
   margin: $spacing-xl 0;
@@ -198,14 +248,61 @@
   border-radius: 16px;
   padding: $spacing-xl;
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 1s ease-in-out 0.6s both;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba(color("primary"), 0.05) 0%,
+      rgba(color("secondary"), 0.05) 100%
+    );
+    z-index: 0;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  }
 
   [data-theme="dark"] & {
     background-color: theme-color($dark-theme, "surface");
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    &::before {
+      background: linear-gradient(
+        135deg,
+        rgba(color("primary"), 0.1) 0%,
+        rgba(color("secondary"), 0.1) 100%
+      );
+    }
   }
 
   .newsletterContent {
     max-width: 600px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
+
+    .newsletterIcon {
+      font-size: 2.5rem;
+      color: color("primary");
+      margin-bottom: $spacing-md;
+      animation: bounce 2s infinite;
+    }
 
     h2 {
       font-size: 2rem;
@@ -226,6 +323,7 @@
   .subscribeForm {
     display: flex;
     gap: $spacing-sm;
+    margin-bottom: $spacing-md;
 
     @include respond-to("mobile") {
       flex-direction: column;
@@ -238,17 +336,179 @@
       border: 1px solid theme-color($light-theme, "card-border");
       background-color: theme-color($light-theme, "card-bg");
       color: theme-color($light-theme, "text");
+      transition: all 0.3s ease;
 
       &:focus {
         outline: none;
         border-color: color("primary");
-        box-shadow: 0 0 0 2px rgba(color("primary"), 0.2);
+        box-shadow: 0 0 0 3px rgba(color("primary"), 0.2);
       }
 
       [data-theme="dark"] & {
         border: 1px solid theme-color($dark-theme, "card-border");
         background-color: theme-color($dark-theme, "card-bg");
         color: theme-color($dark-theme, "text");
+      }
+    }
+  }
+
+  // Subscription status messages
+  .statusMessage {
+    padding: $spacing-sm $spacing-md;
+    border-radius: 8px;
+    margin-top: $spacing-md;
+    font-weight: 500;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .successMessage {
+    background-color: rgba(#10b981, 0.1);
+    color: #10b981;
+    border: 1px solid rgba(#10b981, 0.2);
+  }
+
+  .errorMessage {
+    background-color: rgba(#ef4444, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(#ef4444, 0.2);
+  }
+
+  // Spinner for loading state
+  .spinnerContainer {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  .spinner {
+    animation: spin 1s linear infinite;
+  }
+}
+
+// About Us Section
+.aboutUs {
+  margin: $spacing-xl 0;
+  animation: fadeIn 1s ease-in-out 0.8s both;
+
+  .aboutGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-xl;
+    align-items: center;
+
+    @include respond-to("tablet") {
+      grid-template-columns: 1fr;
+      gap: $spacing-lg;
+    }
+  }
+
+  .aboutInfo {
+    h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: $spacing-md;
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        width: 50px;
+        height: 4px;
+        background-color: color("primary");
+        transition: width 0.3s ease;
+      }
+
+      &:hover::after {
+        width: 100px;
+      }
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: $spacing-lg;
+      color: theme-color($light-theme, "text");
+
+      [data-theme="dark"] & {
+        color: theme-color($dark-theme, "text");
+      }
+    }
+  }
+
+  .aboutImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      border-radius: 16px;
+      box-shadow: 0 15px 30px theme-color($light-theme, "shadow");
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      max-width: 100%;
+      height: auto;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      [data-theme="dark"] & {
+        box-shadow: 0 15px 30px theme-color($dark-theme, "shadow");
+
+        &:hover {
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+  }
+
+  .aboutStats {
+    display: flex;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-lg;
+
+    @include respond-to("mobile") {
+      flex-direction: column;
+      gap: $spacing-md;
+    }
+  }
+
+  .aboutStat {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    .aboutIcon {
+      font-size: 1.5rem;
+      color: color("primary");
+      background-color: rgba(color("primary"), 0.1);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      [data-theme="dark"] & {
+        background-color: rgba(color("primary"), 0.2);
+      }
+    }
+
+    .statValue {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: color("primary");
+      display: block;
+    }
+
+    .statLabel {
+      font-size: 0.9rem;
+      color: theme-color($light-theme, "text-light");
+
+      [data-theme="dark"] & {
+        color: theme-color($dark-theme, "text-light");
       }
     }
   }
@@ -261,6 +521,12 @@
   border-radius: 8px;
   text-decoration: none;
   border: none;
+  cursor: pointer;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 
   &:hover {
     transform: translateY(-2px);
@@ -270,6 +536,16 @@
   &:active {
     transform: translateY(0);
   }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
 }
 
 .outlineButton {
@@ -278,10 +554,16 @@
   border-radius: 8px;
   border-width: 2px;
   text-decoration: none;
+  cursor: pointer;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(map-get($colors, "primary"), 0.3);
+    box-shadow: 0 4px 8px rgba(color("primary"), 0.2);
   }
 
   &:active {
@@ -663,8 +945,9 @@
   }
 
   .paginationButton {
-    padding: $spacing-sm $spacing-md;
-    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     border: 1px solid theme-color($light-theme, "card-border");
     background-color: theme-color($light-theme, "card-bg");
     color: theme-color($light-theme, "text");
@@ -697,5 +980,56 @@
         background-color: theme-color($dark-theme, "card-bg");
       }
     }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

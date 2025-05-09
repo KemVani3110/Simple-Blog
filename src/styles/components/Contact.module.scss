@@ -1,8 +1,90 @@
 @import "@/styles/variables";
 
+// Animation keyframes
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Element animations
+.pageLoaded {
+  .fadeInDown {
+    animation: fadeInDown 0.8s ease-out;
+  }
+
+  .fadeInUp {
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .fadeInLeft {
+    animation: fadeInLeft 0.8s ease-out;
+  }
+
+  .fadeInRight {
+    animation: fadeInRight 0.8s ease-out;
+  }
+}
+
 .contactPage {
   padding: $spacing-lg 0;
   min-height: calc(100vh - #{$header-height} - #{$footer-height});
+  opacity: 0;
+  transition: opacity 0.5s ease;
+
+  &.pageLoaded {
+    opacity: 1;
+  }
 
   [data-theme="dark"] & {
     background-color: theme-color($dark-theme, "bg");
@@ -16,16 +98,41 @@
   padding: $spacing-lg;
   border-radius: 8px;
   box-shadow: 0 3px 10px theme-color($light-theme, "shadow");
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 8px 20px theme-color($light-theme, "shadow");
+  }
 
   [data-theme="dark"] & {
     background-color: theme-color($dark-theme, "card-bg");
     box-shadow: 0 3px 10px theme-color($dark-theme, "shadow");
+
+    &:hover {
+      box-shadow: 0 8px 20px theme-color($dark-theme, "shadow");
+    }
   }
 
   h2 {
     font-size: 1.8rem;
     margin-bottom: $spacing-lg;
     color: color("primary");
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(
+        to right,
+        color("primary"),
+        color("secondary")
+      );
+      border-radius: 3px;
+    }
 
     [data-theme="dark"] & {
       color: color("primary");
@@ -38,6 +145,7 @@
   margin-bottom: $spacing-lg;
   border-radius: 4px;
   font-weight: 500;
+  animation: fadeInDown 0.5s ease-out;
 
   &.success {
     background-color: rgba(40, 167, 69, 0.1);
@@ -68,6 +176,7 @@
     margin-bottom: $spacing-xs;
     font-weight: 500;
     color: theme-color($light-theme, "text");
+    transition: color 0.3s ease;
 
     [data-theme="dark"] & {
       color: theme-color($dark-theme, "text");
@@ -87,12 +196,13 @@
     border-radius: 4px;
     background-color: theme-color($light-theme, "card-bg");
     font-size: 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
 
     &:focus {
       outline: none;
       border-color: color("primary");
-      box-shadow: 0 0 0 3px rgba(123, 173, 222, 0.25); // Using color('primary') with transparency
+      box-shadow: 0 0 0 3px rgba(123, 173, 222, 0.25);
+      transform: translateY(-2px);
     }
 
     &::placeholder {
@@ -121,6 +231,13 @@
   }
 }
 
+.formInput,
+.formTextarea {
+  &:focus + label {
+    color: color("primary");
+  }
+}
+
 .submitBtn {
   display: inline-flex;
   align-items: center;
@@ -134,14 +251,41 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: left 0.7s ease;
+  }
 
   svg {
     margin-right: $spacing-xs;
+    transition: transform 0.3s ease;
   }
 
   &:hover {
     background-color: color("secondary");
     transform: translateY(-2px);
+
+    &::before {
+      left: 100%;
+    }
+
+    svg {
+      transform: translateX(3px);
+    }
   }
 
   &:active {
@@ -166,6 +310,23 @@
     font-size: 1.8rem;
     margin-bottom: $spacing-lg;
     color: color("primary");
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(
+        to right,
+        color("primary"),
+        color("secondary")
+      );
+      border-radius: 3px;
+    }
 
     [data-theme="dark"] & {
       color: color("primary");
@@ -178,9 +339,19 @@
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 3px 10px theme-color($light-theme, "shadow");
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px theme-color($light-theme, "shadow");
+  }
 
   [data-theme="dark"] & {
     box-shadow: 0 3px 10px theme-color($dark-theme, "shadow");
+
+    &:hover {
+      box-shadow: 0 8px 20px theme-color($dark-theme, "shadow");
+    }
   }
 }
 
@@ -217,6 +388,23 @@
     font-size: 1.8rem;
     margin-bottom: $spacing-lg;
     color: color("primary");
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(
+        to right,
+        color("primary"),
+        color("secondary")
+      );
+      border-radius: 3px;
+    }
 
     [data-theme="dark"] & {
       color: color("primary");
@@ -225,29 +413,80 @@
 }
 
 .faqItem {
-  margin-bottom: $spacing-lg;
-  padding-bottom: $spacing-lg;
-  border-bottom: 1px solid theme-color($light-theme, "card-border");
+  margin-bottom: $spacing-md;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: theme-color($light-theme, "card-bg");
+  box-shadow: 0 2px 5px theme-color($light-theme, "shadow");
+  transition: all 0.3s ease;
 
-  &:last-child {
-    border-bottom: none;
+  &:hover {
+    box-shadow: 0 5px 15px theme-color($light-theme, "shadow");
   }
 
-  [data-theme="dark"] & {
-    border-color: theme-color($dark-theme, "card-border");
-  }
+  &.faqExpanded {
+    background-color: rgba(color("primary"), 0.05);
 
-  h3 {
-    font-size: 1.2rem;
-    margin-bottom: $spacing-sm;
-    color: color("primary");
-
-    [data-theme="dark"] & {
+    .faqQuestion h3 {
       color: color("primary");
     }
   }
 
+  [data-theme="dark"] & {
+    background-color: theme-color($dark-theme, "card-bg");
+    box-shadow: 0 2px 5px theme-color($dark-theme, "shadow");
+
+    &:hover {
+      box-shadow: 0 5px 15px theme-color($dark-theme, "shadow");
+    }
+
+    &.faqExpanded {
+      background-color: rgba(color("primary"), 0.15);
+    }
+  }
+}
+
+.faqQuestion {
+  padding: $spacing-md;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  h3 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: theme-color($light-theme, "text");
+    transition: color 0.3s ease;
+
+    [data-theme="dark"] & {
+      color: theme-color($dark-theme, "text");
+    }
+  }
+}
+
+.faqToggle {
+  color: color("primary");
+  transition: transform 0.3s ease;
+
+  .faqExpanded & {
+    transform: rotate(180deg);
+  }
+}
+
+.faqAnswer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+  padding: 0 $spacing-md;
+
+  &.faqAnswerVisible {
+    max-height: 300px;
+    padding: 0 $spacing-md $spacing-md;
+  }
+
   p {
+    margin: 0;
     color: theme-color($light-theme, "text");
     line-height: 1.6;
 
@@ -293,6 +532,10 @@
     color: color("primary");
     font-weight: 700;
     letter-spacing: -0.5px;
+    background: linear-gradient(135deg, color("primary"), color("secondary"));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   p {
@@ -321,16 +564,42 @@
   padding: $spacing-lg;
   border-radius: 8px;
   box-shadow: 0 3px 10px theme-color($light-theme, "shadow");
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px theme-color($light-theme, "shadow");
+  }
 
   [data-theme="dark"] & {
     background-color: theme-color($dark-theme, "card-bg");
     box-shadow: 0 3px 10px theme-color($dark-theme, "shadow");
+
+    &:hover {
+      box-shadow: 0 8px 20px theme-color($dark-theme, "shadow");
+    }
   }
 
   h2 {
     font-size: 1.8rem;
     margin-bottom: $spacing-lg;
     color: color("primary");
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(
+        to right,
+        color("primary"),
+        color("secondary")
+      );
+      border-radius: 3px;
+    }
 
     [data-theme="dark"] & {
       color: color("primary");
@@ -356,10 +625,20 @@
   border-radius: 50%;
   font-size: 1.2rem;
   flex-shrink: 0;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: color("secondary");
+    transform: scale(1.1);
+  }
 
   [data-theme="dark"] & {
     background-color: color("primary");
     color: theme-color($dark-theme, "bg");
+
+    &:hover {
+      background-color: color("secondary");
+    }
   }
 }
 
@@ -427,5 +706,11 @@
         background-color: color("secondary");
       }
     }
+  }
+}
+
+.pulseIcon {
+  &:hover {
+    animation: pulse 0.8s infinite;
   }
 }

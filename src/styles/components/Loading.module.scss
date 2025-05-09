@@ -1,0 +1,102 @@
+@import "@/styles/variables";
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 200px;
+
+  &.fullPage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(theme-color($light-theme, "bg"), 0.8);
+    z-index: 1000;
+    min-height: 100vh;
+
+    // Dark mode support
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(theme-color($dark-theme, "bg"), 0.8);
+    }
+  }
+}
+
+.loadingContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-md;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.small {
+    width: 30px;
+    height: 30px;
+  }
+
+  &.medium {
+    width: 50px;
+    height: 50px;
+  }
+
+  &.large {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.spinIcon {
+  animation: spin 1s infinite linear;
+  color: color("primary");
+  width: 100%;
+  height: 100%;
+}
+
+.loadingText {
+  color: theme-color($light-theme, "text");
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  margin: 0;
+
+  // Dark mode support
+  @media (prefers-color-scheme: dark) {
+    color: theme-color($dark-theme, "text");
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive adjustments
+@include respond-to("mobile") {
+  .spinner {
+    &.medium {
+      width: 40px;
+      height: 40px;
+    }
+
+    &.large {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  .loadingText {
+    font-size: 0.9rem;
+  }
+}

@@ -643,6 +643,904 @@ const posts = [
       avatar: '/images/ava1.png'
     },
     tags: ['Next.js', 'Font Awesome', 'UI']
+  },
+  {
+    id: '13',
+    title: 'Tích hợp Redux với Next.js',
+    slug: 'tich-hop-redux-nextjs',
+    excerpt: 'Hướng dẫn chi tiết cách tích hợp Redux vào ứng dụng Next.js để quản lý state hiệu quả.',
+    content: `
+      # Tích hợp Redux với Next.js
+      
+      Redux là một thư viện quản lý state phổ biến cho ứng dụng React. Trong bài viết này, chúng ta sẽ tìm hiểu cách tích hợp Redux vào Next.js.
+      
+      ## Cài đặt dependencies
+      
+      Đầu tiên, cài đặt các thư viện cần thiết:
+      
+   bash
+      npm install redux react-redux next-redux-wrapper @reduxjs/toolkit
+   
+      
+      ## Tạo Redux store
+      
+      Tạo file \`store.js\` trong thư mục \`store\`:
+      
+   javascript
+      import { configureStore } from '@reduxjs/toolkit';
+      import { createWrapper } from 'next-redux-wrapper';
+      import rootReducer from './reducers';
+      
+      const makeStore = () => configureStore({
+        reducer: rootReducer,
+        devTools: process.env.NODE_ENV !== 'production',
+      });
+      
+      export const wrapper = createWrapper(makeStore);
+   
+      
+      ## Tạo reducer
+      
+      Tạo file \`reducers/index.js\`:
+      
+   javascript
+      import { combineReducers } from 'redux';
+      import { HYDRATE } from 'next-redux-wrapper';
+      import userReducer from './userSlice';
+      
+      const combinedReducer = combineReducers({
+        user: userReducer,
+        // Thêm các reducer khác ở đây
+      });
+      
+      const rootReducer = (state, action) => {
+        if (action.type === HYDRATE) {
+          return {
+            ...state,
+            ...action.payload,
+          };
+        } else {
+          return combinedReducer(state, action);
+        }
+      };
+      
+      export default rootReducer;
+   
+      
+      ## Tạo slice với Redux Toolkit
+      
+   javascript
+      // store/userSlice.js
+      import { createSlice } from '@reduxjs/toolkit';
+      
+      const initialState = {
+        user: null,
+        isLoggedIn: false,
+      };
+      
+      const userSlice = createSlice({
+        name: 'user',
+        initialState,
+        reducers: {
+          login: (state, action) => {
+            state.user = action.payload;
+            state.isLoggedIn = true;
+          },
+          logout: (state) => {
+            state.user = null;
+            state.isLoggedIn = false;
+          },
+        },
+      });
+      
+      export const { login, logout } = userSlice.actions;
+      export default userSlice.reducer;
+   
+      
+      ## Tích hợp với Next.js
+      
+      Cập nhật file \`pages/_app.js\`:
+      
+   javascript
+      import { wrapper } from '../store/store';
+      
+      function MyApp({ Component, pageProps }) {
+        return <Component {...pageProps} />;
+      }
+      
+      export default wrapper.withRedux(MyApp);
+   
+      
+      ## Sử dụng Redux trong component
+      
+   javascript
+      import { useSelector, useDispatch } from 'react-redux';
+      import { login, logout } from '../store/userSlice';
+      
+      function Profile() {
+        const dispatch = useDispatch();
+        const { user, isLoggedIn } = useSelector((state) => state.user);
+        
+        const handleLogin = () => {
+          dispatch(login({ id: 1, name: 'Nguyễn Văn A' }));
+        };
+        
+        const handleLogout = () => {
+          dispatch(logout());
+        };
+        
+        return (
+          <div>
+            {isLoggedIn ? (
+              <>
+                <h2>Xin chào, {user.name}</h2>
+                <button onClick={handleLogout}>Đăng xuất</button>
+              </>
+            ) : (
+              <button onClick={handleLogin}>Đăng nhập</button>
+            )}
+          </div>
+        );
+      }
+   
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-05-08',
+    readTime: '7 phút',
+    author: {
+      name: 'Lê Minh K',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['Next.js', 'Redux', 'State Management']
+  },
+  {
+    id: '14',
+    title: 'Authentication trong Next.js với NextAuth.js',
+    slug: 'authentication-nextjs-nextauth',
+    excerpt: 'Xây dựng hệ thống xác thực người dùng mạnh mẽ với NextAuth.js trong ứng dụng Next.js.',
+    content: `
+      # Authentication trong Next.js với NextAuth.js
+      
+      NextAuth.js là một giải pháp xác thực hoàn chỉnh cho Next.js, hỗ trợ nhiều provider như Google, Facebook, GitHub và cả xác thực bằng email/password.
+      
+      ## Cài đặt NextAuth.js
+      
+   bash
+      npm install next-auth
+   
+      
+      ## Cấu hình NextAuth.js
+      
+      Tạo file \`pages/api/auth/[...nextauth].js\`:
+      
+   javascript
+      import NextAuth from 'next-auth';
+      import Providers from 'next-auth/providers';
+      
+      export default NextAuth({
+        providers: [
+          Providers.Google({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+          }),
+          Providers.GitHub({
+            clientId: process.env.GITHUB_ID,
+            clientSecret: process.env.GITHUB_SECRET
+          }),
+          Providers.Credentials({
+            name: 'Credentials',
+            credentials: {
+              email: { label: "Email", type: "text" },
+              password: { label: "Password", type: "password" }
+            },
+            async authorize(credentials) {
+              // Xử lý đăng nhập tại đây
+              // Ví dụ đơn giản:
+              if (credentials.email === "admin@example.com" && credentials.password === "password") {
+                return { id: 1, name: "Admin", email: "admin@example.com" };
+              }
+              return null;
+            }
+          })
+        ],
+        session: {
+          jwt: true,
+        },
+        callbacks: {
+          async jwt(token, user) {
+            if (user) {
+              token.id = user.id;
+            }
+            return token;
+          },
+          async session(session, token) {
+            session.user.id = token.id;
+            return session;
+          }
+        },
+        pages: {
+          signIn: '/auth/signin',
+          signOut: '/auth/signout',
+          error: '/auth/error',
+        },
+        debug: process.env.NODE_ENV === 'development',
+      });
+   
+      
+      ## Tạo Provider cho ứng dụng
+      
+      Cập nhật file \`pages/_app.js\`:
+      
+   javascript
+      import { Provider } from 'next-auth/client';
+      
+      function MyApp({ Component, pageProps }) {
+        return (
+          <Provider session={pageProps.session}>
+            <Component {...pageProps} />
+          </Provider>
+        );
+      }
+      
+      export default MyApp;
+   
+      
+      ## Sử dụng trong component
+      
+   javascript
+      import { signIn, signOut, useSession } from 'next-auth/client';
+      
+      export default function Header() {
+        const [session, loading] = useSession();
+        
+        return (
+          <header>
+            <nav>
+              {!session && (
+                <button onClick={() => signIn()}>Đăng nhập</button>
+              )}
+              {session && (
+                <>
+                  <span>Xin chào, {session.user.name}</span>
+                  <button onClick={() => signOut()}>Đăng xuất</button>
+                </>
+              )}
+            </nav>
+          </header>
+        );
+      }
+   
+      
+      ## Bảo vệ các route
+      
+   javascript
+      import { useSession, getSession } from 'next-auth/client';
+      import { useEffect } from 'react';
+      import { useRouter } from 'next/router';
+      
+      export default function Dashboard() {
+        const [session, loading] = useSession();
+        const router = useRouter();
+        
+        useEffect(() => {
+          if (!loading && !session) {
+            router.replace('/auth/signin');
+          }
+        }, [session, loading, router]);
+        
+        if (loading) {
+          return <div>Loading...</div>;
+        }
+        
+        if (!session) {
+          return null;
+        }
+        
+        return (
+          <div>
+            <h1>Dashboard</h1>
+            <p>Chào mừng bạn đến với trang quản trị!</p>
+          </div>
+        );
+      }
+      
+      export async function getServerSideProps(context) {
+        const session = await getSession(context);
+        
+        if (!session) {
+          return {
+            redirect: {
+              destination: '/auth/signin',
+              permanent: false,
+            },
+          };
+        }
+        
+        return {
+          props: { session }
+        };
+      }
+   
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-05-09',
+    readTime: '8 phút',
+    author: {
+      name: 'Nguyễn Thị L',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['Next.js', 'Authentication', 'NextAuth.js', 'Security']
+  },
+  {
+    id: '15',
+    title: 'Tối ưu hóa tốc độ tải trang Next.js',
+    slug: 'toi-uu-hoa-toc-do-nextjs',
+    excerpt: 'Các kỹ thuật và best practices để cải thiện hiệu suất và tốc độ tải trang trong ứng dụng Next.js.',
+    content: `
+      # Tối ưu hóa tốc độ tải trang Next.js
+      
+      Tốc độ tải trang là một yếu tố quan trọng ảnh hưởng đến trải nghiệm người dùng và SEO. Dưới đây là các kỹ thuật để tối ưu hóa ứng dụng Next.js của bạn.
+      
+      ## 1. Sử dụng Image Optimization
+      
+      Next.js cung cấp component \`Image\` giúp tối ưu hóa hình ảnh:
+      
+   jsx
+      import Image from 'next/image';
+      
+      <Image
+        src="/images/profile.jpg"
+        alt="Profile"
+        width={500}
+        height={300}
+        priority
+      />
+   
+      
+      ## 2. Font Optimization
+      
+      Sử dụng \`next/font\` để tối ưu font:
+      
+   jsx
+      import { Inter } from 'next/font/google';
+      
+      const inter = Inter({ subsets: ['latin'] });
+      
+      export default function Layout({ children }) {
+        return (
+          <div className={inter.className}>
+            {children}
+          </div>
+        );
+      }
+   
+      
+      ## 3. Code Splitting
+      
+      Next.js tự động thực hiện code splitting. Bạn cũng có thể sử dụng dynamic import để chia nhỏ bundle:
+      
+   jsx
+      import dynamic from 'next/dynamic';
+      
+      const DynamicComponent = dynamic(() => import('../components/HeavyComponent'), {
+        loading: () => <p>Loading...</p>,
+        ssr: false // Nếu component chỉ cần ở client-side
+      });
+   
+      
+      ## 4. Preloading Routes
+      
+      Link component của Next.js tự động preload các trang liên quan:
+      
+   jsx
+      import Link from 'next/link';
+      
+      <Link href="/about">
+        <a>About Us</a>
+      </Link>
+   
+      
+      ## 5. Lazy Loading Components
+      
+      Lazy load các component không cần thiết ngay lập tức:
+      
+   jsx
+      import { lazy, Suspense } from 'react';
+      
+      const HeavyComponent = lazy(() => import('../components/HeavyComponent'));
+      
+      function MyComponent() {
+        return (
+          <Suspense fallback={<div>Loading...</div>}>
+            <HeavyComponent />
+          </Suspense>
+        );
+      }
+   
+      
+      ## 6. Cache Control
+      
+      Thêm headers để cấu hình cache:
+      
+   javascript
+      // pages/blog/[slug].js
+      export async function getServerSideProps({ res }) {
+        res.setHeader(
+          'Cache-Control',
+          'public, s-maxage=10, stale-while-revalidate=59'
+        );
+        
+        // ...fetch data
+        
+        return { props: { data } };
+      }
+   
+      
+      ## 7. Incremental Static Regeneration
+      
+      Sử dụng ISR để cập nhật các trang tĩnh:
+      
+   javascript
+      export async function getStaticProps() {
+        const res = await fetch('https://api.example.com/data');
+        const data = await res.json();
+        
+        return {
+          props: { data },
+          revalidate: 60 // Tái tạo trang sau mỗi 60 giây
+        };
+      }
+   
+      
+      ## 8. Minimize CSS và JavaScript
+      
+      Sử dụng các công cụ như PurgeCSS để loại bỏ CSS không sử dụng:
+      
+   javascript
+      // next.config.js
+      const withPurgeCss = require('next-purgecss');
+      
+      module.exports = withPurgeCss({
+        purgeCss: {
+          content: ['./pages/**/*.{js,jsx}', './components/**/*.{js,jsx}']
+        }
+      });
+   
+      
+      ## 9. Optimize Third-party Scripts
+      
+      Sử dụng \`next/script\` để tối ưu scripts bên thứ ba:
+      
+   jsx
+      import Script from 'next/script';
+      
+      <Script
+        src="https://www.google-analytics.com/analytics.js"
+        strategy="lazyOnload"
+        onLoad={() => console.log('Script loaded correctly')}
+      />
+   
+      
+      ## 10. Measure Performance
+      
+      Sử dụng công cụ như Lighthouse, WebPageTest để đo lường hiệu suất và phát hiện vấn đề:
+      
+   bash
+      # Cài đặt Lighthouse CLI
+      npm install -g lighthouse
+      
+      # Chạy kiểm tra
+      lighthouse https://your-nextjs-app.com
+   
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-05-10',
+    readTime: '9 phút',
+    author: {
+      name: 'Trần Đức M',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['Next.js', 'Performance', 'Optimization', 'Web Vitals']
+  },
+  {
+    id: '16',
+    title: 'Tối ưu SEO với Next.js: SSR và Metadata',
+    slug: 'toi-uu-seo-voi-nextjs',
+    excerpt: 'Next.js hỗ trợ tối ưu SEO mạnh mẽ thông qua tính năng SSR và khả năng cấu hình metadata dễ dàng, giúp cải thiện hiển thị trên công cụ tìm kiếm.',
+    content: `
+      # Tối ưu SEO với Next.js
+  
+      Khi xây dựng website, SEO là yếu tố không thể thiếu để tăng khả năng hiển thị. Next.js hỗ trợ điều này với:
+  
+      ## Server-side Rendering (SSR)
+  
+      Các trang được render từ server sẽ có nội dung đầy đủ khi Google crawl, giúp index hiệu quả hơn.
+  
+      ## Metadata tùy chỉnh
+  
+      Bạn có thể thêm thẻ \`<meta>\` tùy ý trong \`<Head>\` của Next.js để tối ưu tiêu đề, mô tả, và ảnh chia sẻ.
+  
+      ## Structured Data
+  
+      Dễ dàng tích hợp JSON-LD hoặc các loại dữ liệu có cấu trúc để hiển thị rich results trên Google.
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-04-30',
+    readTime: '4 phút',
+    author: {
+      name: 'Nguyễn Văn A',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['SEO', 'Next.js', 'Web Performance']
+  },
+  {
+    id: '17',
+    title: 'So sánh SSR và SSG trong Next.js',
+    slug: 'ssr-va-ssg-nextjs',
+    excerpt: 'SSR và SSG là hai chiến lược render phổ biến trong Next.js. Bài viết này phân tích ưu nhược điểm của từng phương pháp và khi nào nên dùng chúng.',
+    content: `
+      # So sánh SSR và SSG trong Next.js
+  
+      Next.js cung cấp hai phương pháp render chính là SSR (Server-side Rendering) và SSG (Static Site Generation):
+  
+      ## SSR - Linh hoạt và thời gian thực
+  
+      Trang được tạo mỗi lần có request, phù hợp với nội dung thay đổi thường xuyên (ví dụ: dashboard, tin tức).
+  
+      ## SSG - Nhanh và ổn định
+  
+      Trang được build trước và phục vụ qua CDN, lý tưởng cho blog, landing page hoặc nội dung ít thay đổi.
+  
+      ## Khi nào nên dùng cái nào?
+  
+      - Dùng SSR nếu nội dung cần cập nhật thường xuyên.
+      - Dùng SSG nếu ưu tiên tốc độ và có thể build sẵn nội dung.
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-05-01',
+    readTime: '6 phút',
+    author: {
+      name: 'Nguyễn Văn A',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['Next.js', 'SSR', 'SSG']
+  },
+  {
+    id: '18',
+    title: 'Routing trong Next.js: Cơ bản đến nâng cao',
+    slug: 'routing-trong-nextjs',
+    excerpt: 'Next.js sử dụng hệ thống routing dựa trên file-system. Bài viết này sẽ giúp bạn hiểu rõ cách hoạt động và mở rộng routing trong ứng dụng của bạn.',
+    content: `
+      # Routing trong Next.js
+  
+      Hệ thống routing của Next.js dựa trên cấu trúc thư mục \`pages/\`, rất đơn giản mà vẫn mạnh mẽ.
+  
+      ## Routing cơ bản
+  
+      - \`pages/index.tsx\` -> \`/\`
+      - \`pages/about.tsx\` -> \`/about\`
+  
+      ## Dynamic Routing
+  
+      Bạn có thể tạo route động như \`pages/blog/[slug].tsx\` để phục vụ nhiều bài viết.
+  
+      ## Nested Routing & Layouts
+  
+      Next.js 13+ hỗ trợ layout mặc định và nested routing thông qua thư mục \`app/\`, giúp quản lý UI phức tạp hơn.
+  
+      ## Link và Navigation
+  
+      Sử dụng \`next/link\` để chuyển trang nhanh chóng mà không reload toàn bộ trang.
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-05-02',
+    readTime: '7 phút',
+    author: {
+      name: 'Nguyễn Văn A',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['Next.js', 'Routing', 'Frontend']
+  },
+  {
+    id: '19',
+    title: 'API Routes trong Next.js: Xây dựng backend đơn giản',
+    slug: 'api-routes-nextjs',
+    excerpt: 'API Routes là tính năng mạnh mẽ của Next.js cho phép bạn tạo backend trong cùng project mà không cần server riêng.',
+    content: `
+      # API Routes trong Next.js
+  
+      API Routes cho phép bạn định nghĩa các endpoint backend trong thư mục \`pages/api/\`.
+  
+      ## Cách tạo API route
+  
+      - Tạo file \`pages/api/hello.ts\` và export một hàm xử lý request.
+  
+      ## Hỗ trợ method GET, POST...
+  
+      Có thể xử lý các method HTTP khác nhau bằng cách kiểm tra \`req.method\`.
+  
+      ## Ứng dụng thực tế
+  
+      - Gửi form
+      - Lưu dữ liệu
+      - Tích hợp với database hoặc API bên ngoài
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-05-03',
+    readTime: '5 phút',
+    author: {
+      name: 'Nguyễn Văn A',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['Next.js', 'API', 'Backend']
+  },
+  {
+    id: '20',
+    title: 'Tích hợp SCSS vào Next.js một cách dễ dàng',
+    slug: 'tich-hop-scss-vao-nextjs',
+    excerpt: 'SCSS giúp tổ chức CSS tốt hơn và dễ bảo trì. Next.js hỗ trợ tích hợp SCSS rất dễ dàng với cấu hình tối thiểu.',
+    content: `
+      # Tích hợp SCSS vào Next.js
+  
+      SCSS (Sass) giúp viết CSS rõ ràng, có cấu trúc và dễ tái sử dụng hơn.
+  
+      ## Cài đặt
+  
+      \`npm install sass\`
+  
+      ## Sử dụng SCSS Module
+  
+      Tạo file \`Component.module.scss\` và import trong component để tránh trùng class.
+  
+      ## Biến, mixin và nested rules
+  
+      SCSS cho phép tạo biến màu, mixin tái sử dụng và lồng class gọn gàng hơn nhiều so với CSS thuần.
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-05-04',
+    readTime: '4 phút',
+    author: {
+      name: 'Nguyễn Văn A',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['SCSS', 'Next.js', 'Styling']
+  },
+  {
+    id: '21',
+    title: 'Triển khai Next.js lên Vercel: Nhanh chóng và miễn phí',
+    slug: 'trien-khai-nextjs-vercel',
+    excerpt: 'Vercel là nền tảng triển khai chính thức cho Next.js, giúp bạn publish ứng dụng chỉ với vài cú click.',
+    content: `
+      # Triển khai Next.js lên Vercel
+  
+      Vercel là lựa chọn số 1 để deploy ứng dụng Next.js.
+  
+      ## Đăng nhập và kết nối GitHub
+  
+      Chọn repo Next.js và Vercel sẽ tự động nhận diện project.
+  
+      ## Tự động build & deploy
+  
+      Mỗi lần push code, Vercel sẽ build lại và deploy tự động.
+  
+      ## Hỗ trợ custom domain, SSL, preview
+  
+      Vercel hỗ trợ domain riêng, HTTPS miễn phí và preview cho từng pull request.
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-05-05',
+    readTime: '3 phút',
+    author: {
+      name: 'Nguyễn Văn A',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['Next.js', 'Vercel', 'Deployment']
+  },
+  {
+    id: '22',
+    title: 'Quản lý dữ liệu với useSWR trong Next.js',
+    slug: 'quan-ly-du-lieu-voi-useswr',
+    excerpt: 'useSWR là một hook mạnh mẽ giúp bạn fetch và cache dữ liệu hiệu quả trong Next.js, tối ưu trải nghiệm người dùng.',
+    content: `
+      # Quản lý dữ liệu với useSWR
+  
+      SWR là thư viện do Vercel phát triển giúp fetch data thông minh trong React/Next.js.
+  
+      ## Cài đặt
+  
+      \`npm install swr\`
+  
+      ## Cách sử dụng cơ bản
+  
+      tsx
+      const { data, error } = useSWR('/api/user', fetcher);
+      
+  
+      ## Tính năng nổi bật
+  
+      - Tự động revalidate
+      - Cache thông minh
+      - Fallback khi offline
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-05-06',
+    readTime: '5 phút',
+    author: {
+      name: 'Nguyễn Văn A',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['Next.js', 'SWR', 'Data Fetching']
+  },
+  {
+    id: '23',
+    title: 'Tạo giao diện tối/ sáng (Dark Mode) trong Next.js',
+    slug: 'dark-mode-trong-nextjs',
+    excerpt: 'Dark Mode là xu hướng giao diện hiện đại. Hãy cùng tạo tính năng này trong Next.js với Theme Provider hoặc class toggling.',
+    content: `
+      # Tạo Dark Mode trong Next.js
+  
+      Việc thêm Dark Mode sẽ nâng tầm trải nghiệm người dùng hiện đại.
+  
+      ## Cách đơn giản: Toggle class
+  
+      Dùng \`classList.toggle('dark')\` và tailwind hoặc SCSS để thay đổi theme.
+  
+      ## Cách chuyên nghiệp: Context hoặc ThemeProvider
+  
+      Quản lý theme bằng Context API và lưu trạng thái vào localStorage.
+  
+      ## Gợi ý UI
+  
+      Thêm nút chuyển chế độ sáng/tối và lưu lựa chọn của người dùng.
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-05-07',
+    readTime: '6 phút',
+    author: {
+      name: 'Nguyễn Văn A',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['Dark Mode', 'Next.js', 'UI']
+  },
+  {
+    id: '24',
+    title: 'Tạo blog tĩnh bằng Next.js và Markdown',
+    slug: 'tao-blog-tinh-voi-nextjs',
+    excerpt: 'Bạn có thể xây dựng blog tĩnh đơn giản với Next.js bằng cách đọc file Markdown và chuyển thành HTML.',
+    content: `
+      # Tạo blog tĩnh với Markdown
+  
+      Blog cá nhân tĩnh bằng Next.js rất nhẹ, dễ triển khai và miễn phí.
+  
+      ## Cài thư viện cần thiết
+  
+      \`npm install gray-matter remark remark-html\`
+  
+      ## Đọc file Markdown
+  
+      Dùng \`fs\` và \`path\` để load nội dung trong thư mục \`posts/\`.
+  
+      ## Chuyển đổi sang HTML
+  
+      Sử dụng remark để parse nội dung Markdown thành HTML và hiển thị trong component.
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-05-07',
+    readTime: '7 phút',
+    author: {
+      name: 'Nguyễn Văn A',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['Next.js', 'Markdown', 'Blog']
+  },
+  {
+    id: '25',
+    title: 'Tối ưu hiệu suất trong Next.js',
+    slug: 'toi-uu-hieu-suat-nextjs',
+    excerpt: 'Next.js cung cấp nhiều công cụ để tối ưu hiệu suất, giúp trang web tải nhanh và mượt mà hơn cho người dùng.',
+    content: `
+      # Tối ưu hiệu suất trong Next.js
+  
+      Hiệu suất luôn là yếu tố quan trọng trong web hiện đại.
+  
+      ## Phân tách mã (Code Splitting)
+  
+      Next.js tự động chia nhỏ bundle để giảm tải.
+  
+      ## Lazy load ảnh
+  
+      Sử dụng \`next/image\` để lazy load và tối ưu ảnh hiệu quả.
+  
+      ## Tối ưu CSS
+  
+      Sử dụng SCSS module và purge CSS nếu dùng Tailwind để giảm kích thước file.
+  
+      ## Kiểm tra bằng Lighthouse
+  
+      Dùng Chrome DevTools hoặc Vercel Analytics để đo hiệu suất thực tế.
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-05-08',
+    readTime: '6 phút',
+    author: {
+      name: 'Nguyễn Văn A',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['Next.js', 'Performance', 'Web Optimization']
+  },
+  {
+    id: '26',
+    title: 'Sử dụng Font Awesome trong dự án Next.js',
+    slug: 'font-awesome-trong-nextjs',
+    excerpt: 'Font Awesome giúp bạn thêm các biểu tượng đẹp mắt và dễ sử dụng vào giao diện Next.js chỉ với vài bước cài đặt.',
+    content: `
+      # Sử dụng Font Awesome trong Next.js
+  
+      Font Awesome cung cấp hàng nghìn icon sẵn sàng để dùng.
+  
+      ## Cài đặt thư viện
+  
+      \`npm install @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome\`
+  
+      ## Cấu hình để dùng trong dự án
+  
+      Tạo file \`_app.tsx\` để import cấu hình và tránh việc tải lại icon CSS nhiều lần.
+  
+      ## Dùng icon trong component
+  
+      tsx
+      import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+      import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+  
+      <FontAwesomeIcon icon={faCoffee} />
+      
+  
+      Có thể thay đổi màu, kích thước, animation tùy ý với props.
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-05-08',
+    readTime: '4 phút',
+    author: {
+      name: 'Nguyễn Văn A',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['Next.js', 'Font Awesome', 'UI']
+  },
+  {
+    id: '27',
+    title: 'Xây dựng ứng dụng đa ngôn ngữ với Next.js và i18n',
+    slug: 'da-ngon-ngu-nextjs-i18n',
+    excerpt: 'Next.js hỗ trợ tích hợp i18n giúp bạn xây dựng ứng dụng đa ngôn ngữ, mở rộng thị trường và cải thiện trải nghiệm người dùng.',
+    content: `
+      # Đa ngôn ngữ với Next.js và i18n
+  
+      Việc hỗ trợ nhiều ngôn ngữ giúp ứng dụng thân thiện hơn với người dùng toàn cầu.
+  
+      ## Bật cấu hình i18n trong \`next.config.js\`
+  
+      js
+      i18n: {
+        locales: ['vi', 'en'],
+        defaultLocale: 'vi',
+      }
+      
+  
+      ## Cách tổ chức file dịch
+  
+      Tạo thư mục \`locales/vi/\` và \`locales/en/\` với file JSON chứa nội dung từng ngôn ngữ.
+  
+      ## Sử dụng thư viện hỗ trợ
+  
+      Dùng \`next-i18next\` để xử lý dịch, chuyển ngôn ngữ và lấy text động trong component.
+    `,
+    featuredImage: '/images/nextjs.png',
+    date: '2025-05-08',
+    readTime: '6 phút',
+    author: {
+      name: 'Nguyễn Văn A',
+      avatar: '/images/ava1.png'
+    },
+    tags: ['Next.js', 'i18n', 'Localization']
   }
 ]
 

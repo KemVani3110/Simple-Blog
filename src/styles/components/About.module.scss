@@ -1,5 +1,39 @@
 @import "@/styles/variables";
 
+// Animation keyframes
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .aboutPage {
   padding: $spacing-lg 0;
   min-height: calc(100vh - #{$header-height} - #{$footer-height});
@@ -8,6 +42,23 @@
     background-color: theme-color($dark-theme, "bg");
     color: theme-color($dark-theme, "text");
   }
+
+  &.loading {
+    .animateItem {
+      opacity: 0;
+    }
+  }
+
+  &.loaded {
+    .animateItem {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+  }
+}
+
+.animateItem {
+  opacity: 0;
+  will-change: opacity, transform;
 }
 
 .hero {
@@ -57,6 +108,36 @@
   }
 }
 
+// New stats section
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-xl;
+  margin-top: $spacing-xl;
+  flex-wrap: wrap;
+
+  .statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: scaleIn 0.8s ease-out forwards;
+    animation-delay: 0.4s;
+    opacity: 0;
+  }
+
+  .statNumber {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: color("primary");
+    margin-bottom: 0.2rem;
+  }
+
+  .statLabel {
+    color: color("secondary");
+    font-size: 1rem;
+  }
+}
+
 .aboutContent {
   display: flex;
   flex-direction: column;
@@ -86,10 +167,10 @@
     width: 100%;
     height: auto;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.5s ease;
 
     &:hover {
-      transform: scale(1.02);
+      transform: scale(1.03);
     }
   }
 }
@@ -111,6 +192,56 @@
     margin-bottom: 1rem;
     line-height: 1.6;
     font-size: 1.1rem;
+  }
+}
+
+// New milestones section
+.milestones {
+  margin-top: $spacing-lg;
+  padding: $spacing-md;
+  background-color: theme-color($light-theme, "surface");
+  border-radius: 8px;
+  box-shadow: 0 2px 8px theme-color($light-theme, "shadow");
+
+  [data-theme="dark"] & {
+    background-color: theme-color($dark-theme, "surface");
+    box-shadow: 0 2px 8px theme-color($dark-theme, "shadow");
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    color: color("primary");
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 1.5rem;
+    margin: 0;
+
+    li {
+      position: relative;
+      margin-bottom: 0.8rem;
+      padding-left: 1rem;
+
+      &:before {
+        content: "";
+        position: absolute;
+        left: -1rem;
+        top: 0.5rem;
+        width: 8px;
+        height: 8px;
+        background-color: color("primary");
+        border-radius: 50%;
+      }
+
+      strong {
+        color: color("secondary");
+      }
+    }
   }
 }
 
@@ -163,6 +294,11 @@
     [data-theme="dark"] & {
       box-shadow: 0 5px 15px theme-color($dark-theme, "shadow");
     }
+
+    .valueIcon {
+      transform: scale(1.1);
+      color: color("accent");
+    }
   }
 
   h3 {
@@ -188,6 +324,7 @@
   font-size: 2rem;
   color: color("primary");
   margin-bottom: 1rem;
+  transition: transform 0.3s ease, color 0.3s ease;
 
   [data-theme="dark"] & {
     color: color("primary");
@@ -233,6 +370,7 @@
     height: 200px;
     margin: 0 auto 1rem;
     box-shadow: 0 3px 10px theme-color($light-theme, "shadow");
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 
     [data-theme="dark"] & {
       box-shadow: 0 3px 10px theme-color($dark-theme, "shadow");
@@ -242,11 +380,20 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s ease;
+      transition: transform 0.5s ease;
     }
 
-    &:hover img {
-      transform: scale(1.05);
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px theme-color($light-theme, "shadow");
+
+      [data-theme="dark"] & {
+        box-shadow: 0 8px 20px theme-color($dark-theme, "shadow");
+      }
+
+      img {
+        transform: scale(1.08);
+      }
     }
   }
 
@@ -262,9 +409,45 @@
 
   p {
     color: theme-color($light-theme, "text");
+    margin-bottom: 0.8rem;
 
     [data-theme="dark"] & {
       color: theme-color($dark-theme, "text");
+    }
+  }
+}
+
+// Member social links
+.memberSocial {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  .infoIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: color("primary");
+    color: theme-color($light-theme, "card-bg");
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      background-color: color("secondary");
+      transform: translateY(-3px);
+    }
+
+    [data-theme="dark"] & {
+      background-color: color("primary");
+      color: theme-color($dark-theme, "bg");
+
+      &:hover {
+        background-color: color("secondary");
+      }
     }
   }
 }

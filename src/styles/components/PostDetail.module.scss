@@ -10,6 +10,7 @@
   background-color: theme-color($light-theme, "card-bg");
   border-radius: 12px;
   box-shadow: 0 5px 20px theme-color($light-theme, "shadow");
+  position: relative;
 
   @include respond-to("tablet") {
     padding: $spacing-md;
@@ -49,11 +50,49 @@
         background-color: theme-color($dark-theme, "surface");
       }
     }
+
+    .tag {
+      background-color: theme-color($dark-theme, "surface");
+      color: theme-color($dark-theme, "text");
+    }
   }
 }
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.featuredImageContainer {
+  margin: -$spacing-lg -$spacing-md 0;
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  top: 20px;
+  @include respond-to("tablet") {
+    margin: -$spacing-md -$spacing-md 0;
+    height: 250px;
+  }
+
+  @include respond-to("mobile") {
+    height: 200px;
+  }
+}
+
+.featuredImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .postHeader {
-  margin-bottom: $spacing-xl;
+  margin: $spacing-lg 0 $spacing-xl;
   text-align: center;
   position: relative;
 
@@ -63,6 +102,10 @@
     margin-bottom: $spacing-md;
     line-height: 1.2;
     color: color("primary");
+
+    @include respond-to("tablet") {
+      font-size: 2.4rem;
+    }
 
     @include respond-to("mobile") {
       font-size: 2rem;
@@ -95,6 +138,11 @@
     margin-right: $spacing-md;
     border: 3px solid color("secondary");
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 
   div {
@@ -122,6 +170,18 @@
     font-size: 1.8rem;
     margin: $spacing-lg 0 $spacing-md;
     color: color("primary");
+    position: relative;
+    padding-bottom: $spacing-xs;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background-color: color("accent");
+    }
   }
 
   h3 {
@@ -138,15 +198,22 @@
     width: 100%;
     border-radius: 8px;
     margin: $spacing-lg 0;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.01);
+    }
   }
 
   blockquote {
     border-left: 4px solid color("accent");
-    padding-left: $spacing-md;
+    padding: $spacing-sm $spacing-md;
     margin: $spacing-md 0;
     font-style: italic;
     color: theme-color($light-theme, "text");
     opacity: 0.9;
+    background-color: rgba(theme-color($light-theme, "surface"), 0.5);
+    border-radius: 0 8px 8px 0;
   }
 
   code {
@@ -163,6 +230,7 @@
     border-radius: 8px;
     overflow-x: auto;
     margin: $spacing-md 0;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
 
     code {
       background-color: transparent;
@@ -177,6 +245,11 @@
 
     li {
       margin-bottom: $spacing-xs;
+      position: relative;
+
+      &::marker {
+        color: color("primary");
+      }
     }
   }
 
@@ -184,6 +257,7 @@
     color: color("primary");
     text-decoration: underline;
     transition: color 0.2s;
+    font-weight: 500;
 
     &:hover {
       color: color("secondary");
@@ -191,12 +265,42 @@
   }
 }
 
+.tagContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-lg;
+  cursor: pointer;
+}
+
+.tag {
+  display: inline-block;
+  padding: $spacing-xs $spacing-sm;
+  background-color: theme-color($light-theme, "surface");
+  color: color("primary");
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: color("primary");
+    color: white;
+    transform: translateY(-2px);
+  }
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  margin-top: $spacing-lg;
+}
+
 .backLink {
   display: inline-block;
-  margin-top: $spacing-lg;
   padding: $spacing-sm $spacing-lg;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   color: color("primary");
   background-color: transparent;
   border: 2px solid color("primary");

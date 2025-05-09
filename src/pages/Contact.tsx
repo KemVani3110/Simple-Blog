@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from "@/styles/components/Contact.module.scss";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Loading from "@/components/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMapMarkerAlt,
@@ -10,6 +12,8 @@ import {
   faEnvelope,
   faClock,
   faPaperPlane,
+  faChevronDown,
+  faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebookF,
@@ -26,20 +30,36 @@ export default function Contact() {
     subject: "",
     message: "",
   });
-  const [formStatus, setFormStatus] = useState<{
+
+  type FormStatus = {
     message: string;
     type: "success" | "error" | null;
-  }>({
+  };
+
+  const [formStatus, setFormStatus] = useState<FormStatus>({
     message: "",
     type: null,
   });
 
+  const [expandedFaq, setExpandedFaq] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [pageLoaded, setPageLoaded] = useState(false);
+
   useEffect(() => {
     setMounted(true);
+
+    // Set loading to false after delay to simulate page loading
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false);
+      // Apply animation classes after loading is complete
+      setPageLoaded(true);
+    }, 1000);
+
+    return () => clearTimeout(loadingTimer);
   }, []);
 
-  if (!mounted) {
-    return null;
+  if (!mounted || isLoading) {
+    return <Loading fullPage text="Đang tải trang..." size="large" />;
   }
 
   const handleChange = (
@@ -64,7 +84,7 @@ export default function Contact() {
       return;
     }
 
-    // Simulate form submission
+    //Form submission real-life simulation
     setTimeout(() => {
       setFormStatus({
         message: "Cảm ơn! Tin nhắn của bạn đã được gửi thành công.",
@@ -89,6 +109,42 @@ export default function Contact() {
     }, 1000);
   };
 
+  const toggleFaq = (index: any) => {
+    if (expandedFaq === index) {
+      setExpandedFaq(null);
+    } else {
+      setExpandedFaq(index);
+    }
+  };
+
+  const faqItems = [
+    {
+      question: "Làm thế nào để đăng ký nhận bản tin từ Next Blog?",
+      answer:
+        "Bạn có thể đăng ký nhận bản tin bằng cách điền email của bạn vào form đăng ký ở cuối trang chủ hoặc liên hệ trực tiếp với chúng tôi qua form liên hệ ở trên.",
+    },
+    {
+      question: "Tôi có thể đóng góp bài viết cho Next Blog không?",
+      answer:
+        "Chúng tôi luôn chào đón những cộng tác viên mới. Hãy gửi email cho chúng tôi theo địa chỉ contribute@nextblog.com để biết thêm chi tiết.",
+    },
+    {
+      question: "Next Blog có cung cấp dịch vụ tư vấn không?",
+      answer:
+        "Có, chúng tôi cung cấp dịch vụ tư vấn về phát triển web, thiết kế UX/UI và chiến lược nội dung. Vui lòng liên hệ với chúng tôi để biết thêm chi tiết.",
+    },
+    {
+      question: "Làm thế nào để báo cáo một bài viết vi phạm?",
+      answer:
+        "Bạn có thể báo cáo bài viết vi phạm bằng cách sử dụng nút 'Báo cáo' ở cuối mỗi bài viết hoặc gửi email đến report@nextblog.com với chi tiết về bài viết đó.",
+    },
+    {
+      question: "Hiện tại Blog có hỗ trợ ngôn ngữ nào?",
+      answer:
+        " Hiện tại, Next Blog chỉ hỗ trợ tiếng Việt. Chúng tôi đang làm việc để mở rộng hỗ trợ cho nhiều ngôn ngữ hơn.",
+    },
+  ];
+
   return (
     <>
       <Head>
@@ -100,15 +156,27 @@ export default function Contact() {
 
       <Navbar />
 
-      <main className={styles.contactPage}>
+      <main
+        className={`${styles.contactPage} ${
+          pageLoaded ? styles.pageLoaded : ""
+        }`}
+      >
         <div className="container">
-          <section className={styles.hero}>
+          {/*Heading Section*/}
+          <section
+            className={`${styles.hero} ${pageLoaded ? styles.fadeInDown : ""}`}
+          >
             <h1>Liên hệ với chúng tôi</h1>
             <p>Chúng tôi luôn sẵn sàng lắng nghe ý kiến của bạn</p>
           </section>
 
+          {/*Contact Content Section*/}
           <section className={styles.contactContent}>
-            <div className={styles.contactInfo}>
+            <div
+              className={`${styles.contactInfo} ${
+                pageLoaded ? styles.fadeInLeft : ""
+              }`}
+            >
               <h2>Thông tin liên hệ</h2>
 
               <div className={styles.infoItem}>
@@ -117,7 +185,7 @@ export default function Contact() {
                 </div>
                 <div className={styles.infoText}>
                   <h3>Địa chỉ</h3>
-                  <p>123 Đường ABC, Quận 1, TP. Hồ Chí Minh</p>
+                  <p>123 Đường ABC, Quận 5, TP. Hồ Chí Minh</p>
                 </div>
               </div>
 
@@ -159,6 +227,7 @@ export default function Contact() {
                     href="https://facebook.com"
                     target="_blank"
                     rel="noopener noreferrer"
+                    className={styles.pulseIcon}
                   >
                     <FontAwesomeIcon icon={faFacebookF} />
                   </a>
@@ -166,6 +235,7 @@ export default function Contact() {
                     href="https://twitter.com"
                     target="_blank"
                     rel="noopener noreferrer"
+                    className={styles.pulseIcon}
                   >
                     <FontAwesomeIcon icon={faTwitter} />
                   </a>
@@ -173,6 +243,7 @@ export default function Contact() {
                     href="https://linkedin.com"
                     target="_blank"
                     rel="noopener noreferrer"
+                    className={styles.pulseIcon}
                   >
                     <FontAwesomeIcon icon={faLinkedinIn} />
                   </a>
@@ -180,6 +251,7 @@ export default function Contact() {
                     href="https://instagram.com"
                     target="_blank"
                     rel="noopener noreferrer"
+                    className={styles.pulseIcon}
                   >
                     <FontAwesomeIcon icon={faInstagram} />
                   </a>
@@ -187,7 +259,11 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className={styles.contactForm}>
+            <div
+              className={`${styles.contactForm} ${
+                pageLoaded ? styles.fadeInRight : ""
+              }`}
+            >
               <h2>Gửi tin nhắn cho chúng tôi</h2>
 
               {formStatus.message && (
@@ -212,6 +288,7 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Nhập họ tên của bạn"
+                    className={styles.formInput}
                   />
                 </div>
 
@@ -226,6 +303,7 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Nhập địa chỉ email của bạn"
+                    className={styles.formInput}
                   />
                 </div>
 
@@ -238,6 +316,7 @@ export default function Contact() {
                     value={formData.subject}
                     onChange={handleChange}
                     placeholder="Nhập tiêu đề tin nhắn"
+                    className={styles.formInput}
                   />
                 </div>
 
@@ -252,6 +331,7 @@ export default function Contact() {
                     onChange={handleChange}
                     placeholder="Nhập nội dung tin nhắn của bạn"
                     rows={6}
+                    className={styles.formTextarea}
                   ></textarea>
                 </div>
 
@@ -263,44 +343,53 @@ export default function Contact() {
             </div>
           </section>
 
-          <section className={styles.mapSection}>
+          {/*Map Section*/}
+          <section
+            className={`${styles.mapSection} ${
+              pageLoaded ? styles.fadeInUp : ""
+            }`}
+          >
             <h2>Bản đồ</h2>
             <div className={styles.mapContainer}>
               <div className={styles.mapPlaceholder}>
-                <p>Bản đồ sẽ được hiển thị ở đây nè.</p>
+                <p>Bản đồ sẽ được hiển thị ở đây.</p>
               </div>
             </div>
           </section>
 
-          <section className={styles.faq}>
+          {/*FAQ Section*/}
+          <section
+            className={`${styles.faq} ${pageLoaded ? styles.fadeInUp : ""}`}
+          >
             <h2>Câu hỏi thường gặp</h2>
 
-            <div className={styles.faqItem}>
-              <h3>1. Làm thế nào để đăng ký nhận bản tin từ Next Blog?</h3>
-              <p>
-                Bạn có thể đăng ký nhận bản tin bằng cách điền email của bạn vào
-                form đăng ký ở cuối trang chủ hoặc liên hệ trực tiếp với chúng
-                tôi qua form liên hệ ở trên.
-              </p>
-            </div>
-
-            <div className={styles.faqItem}>
-              <h3>2. Tôi có thể đóng góp bài viết cho Next Blog không?</h3>
-              <p>
-                Chúng tôi luôn chào đón những cộng tác viên mới. Hãy gửi email
-                cho chúng tôi theo địa chỉ contribute@nextblog.com để biết thêm
-                chi tiết.
-              </p>
-            </div>
-
-            <div className={styles.faqItem}>
-              <h3>3. Next Blog có cung cấp dịch vụ tư vấn không?</h3>
-              <p>
-                Có, chúng tôi cung cấp dịch vụ tư vấn về phát triển web, thiết
-                kế UX/UI và chiến lược nội dung. Vui lòng liên hệ với chúng tôi
-                để biết thêm chi tiết.
-              </p>
-            </div>
+            {faqItems.map((item, index) => (
+              <div
+                key={index}
+                className={`${styles.faqItem} ${
+                  expandedFaq === index ? styles.faqExpanded : ""
+                }`}
+              >
+                <div
+                  className={styles.faqQuestion}
+                  onClick={() => toggleFaq(index)}
+                >
+                  <h3>{item.question}</h3>
+                  <span className={styles.faqToggle}>
+                    <FontAwesomeIcon
+                      icon={expandedFaq === index ? faChevronUp : faChevronDown}
+                    />
+                  </span>
+                </div>
+                <div
+                  className={`${styles.faqAnswer} ${
+                    expandedFaq === index ? styles.faqAnswerVisible : ""
+                  }`}
+                >
+                  <p>{item.answer}</p>
+                </div>
+              </div>
+            ))}
           </section>
         </div>
       </main>

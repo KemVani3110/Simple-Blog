@@ -5,11 +5,21 @@ import { Post } from "@/types/post";
 
 interface PostCardProps {
   post: Post;
+  view?: "grid" | "list";
+  className?: string;
 }
 
-export default function PostCard({ post }: PostCardProps) {
+export default function PostCard({
+  post,
+  view = "grid",
+  className = "",
+}: PostCardProps) {
+  const cardClassName = `${styles.card} ${
+    view === "list" ? styles.listView : ""
+  } ${className}`;
+
   return (
-    <div className={styles.card}>
+    <div className={cardClassName}>
       <Link href={`/posts/${post.slug}`} className={styles.thumbnailLink}>
         <Image
           width={400}

@@ -6,6 +6,9 @@
   min-height: calc(100vh - #{$header-height} - #{$footer-height});
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+  animation: fadeIn 0.8s ease-out forwards;
+  opacity: 0;
 
   [data-theme="dark"] & {
     background-color: theme-color($dark-theme, "bg");
@@ -22,6 +25,15 @@
   box-shadow: 0 4px 12px theme-color($light-theme, "shadow");
   position: relative;
   overflow: hidden;
+  transition: all 0.3s ease;
+  animation: fadeInDown 0.8s ease-out 0.2s forwards;
+  animation-fill-mode: both;
+  opacity: 0;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px theme-color($light-theme, "shadow");
+  }
 
   &::before {
     content: "";
@@ -38,9 +50,36 @@
     );
   }
 
+  // Thêm hiệu ứng hoa văn nền
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(
+        circle at 100% 100%,
+        rgba(color("primary"), 0.1) 10px,
+        transparent 10px
+      ),
+      radial-gradient(
+        circle at 0% 0%,
+        rgba(color("secondary"), 0.1) 10px,
+        transparent 10px
+      );
+    background-size: 100px 100px;
+    opacity: 0.4;
+    z-index: 0;
+  }
+
   [data-theme="dark"] & {
     background-color: theme-color($dark-theme, "surface");
     box-shadow: 0 4px 15px theme-color($dark-theme, "shadow");
+
+    &:hover {
+      box-shadow: 0 8px 25px theme-color($dark-theme, "shadow");
+    }
   }
 
   h1 {
@@ -49,6 +88,25 @@
     color: color("primary");
     font-weight: 700;
     letter-spacing: -0.5px;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    animation: fadeInDown 0.8s ease-out 0.4s forwards;
+    animation-fill-mode: both;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(
+        to right,
+        color("primary"),
+        color("secondary")
+      );
+      margin: 15px auto 0;
+      border-radius: 2px;
+    }
   }
 
   p {
@@ -57,6 +115,107 @@
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    animation: fadeInDown 0.8s ease-out 0.6s forwards;
+    animation-fill-mode: both;
+  }
+}
+
+// Thêm thống kê bài viết
+.postStats {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-xl;
+  margin-top: $spacing-lg;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 0.8s forwards;
+  animation-fill-mode: both;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  animation: scaleIn 0.6s ease-out forwards;
+  animation-fill-mode: both;
+  &:nth-child(1) {
+    animation-delay: 1s;
+  }
+
+  &:nth-child(2) {
+    animation-delay: 1.2s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 1.4s;
+  }
+}
+
+.statNumber {
+  font-size: 2rem;
+  font-weight: 700;
+  color: color("primary");
+  background: linear-gradient(to right, color("primary"), color("secondary"));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: pulse 2s infinite;
+  animation-delay: 1.5s;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: color("secondary");
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+// Mobile filter toggle
+.mobileFilterToggle {
+  display: none;
+  width: 100%;
+  padding: $spacing-md;
+  background-color: theme-color($light-theme, "surface");
+  border: none;
+  border-radius: 8px;
+  color: color("secondary");
+  font-weight: 600;
+  margin-bottom: $spacing-md;
+  cursor: pointer;
+  box-shadow: 0 2px 8px theme-color($light-theme, "shadow");
+  transition: all 0.2s ease;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  animation: fadeInDown 0.6s ease-out 0.8s forwards;
+  animation-fill-mode: both;
+
+  .filterIcon {
+    color: color("primary");
+    animation: bounce 2s infinite;
+    animation-delay: 1.2s;
+  }
+
+  &:hover {
+    background-color: rgba(color("primary"), 0.1);
+  }
+
+  [data-theme="dark"] & {
+    background-color: theme-color($dark-theme, "surface");
+    box-shadow: 0 2px 8px theme-color($dark-theme, "shadow");
+
+    &:hover {
+      background-color: rgba(color("primary"), 0.2);
+    }
+  }
+
+  @media (max-width: map-get($breakpoints, "tablet")) {
+    display: flex;
   }
 }
 
@@ -69,16 +228,141 @@
   padding: $spacing-lg;
   border-radius: 12px;
   box-shadow: 0 2px 10px theme-color($light-theme, "shadow");
+  position: relative;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 1s forwards;
+  animation-fill-mode: both;
+
+  // Thêm hiệu ứng highlight
+  &:hover {
+    box-shadow: 0 8px 25px rgba(color("primary"), 0.15);
+  }
 
   [data-theme="dark"] & {
     background-color: theme-color($dark-theme, "card-bg");
     box-shadow: 0 2px 10px theme-color($dark-theme, "shadow");
+
+    &:hover {
+      box-shadow: 0 8px 25px rgba(color("primary"), 0.25);
+    }
   }
 
   @media (min-width: map-get($breakpoints, "tablet")) {
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
+  }
+
+  @media (max-width: map-get($breakpoints, "tablet")) {
+    display: none;
+
+    &.showFilters {
+      display: flex;
+    }
+  }
+}
+
+.filterControls {
+  display: flex;
+  gap: $spacing-md;
+  align-items: center;
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out 1.4s forwards;
+  animation-fill-mode: both;
+
+  @media (max-width: map-get($breakpoints, "tablet")) {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
+.sortControl {
+  margin-right: $spacing-md;
+}
+
+.sortButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background-color: theme-color($light-theme, "surface");
+  border: 1px solid rgba(color("primary"), 0.2);
+  color: color("secondary");
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  .sortIcon {
+    color: color("primary");
+  }
+
+  &:hover {
+    background-color: rgba(color("primary"), 0.1);
+    transform: translateY(-2px);
+  }
+
+  [data-theme="dark"] & {
+    background-color: theme-color($dark-theme, "surface");
+    border: 1px solid rgba(color("primary"), 0.3);
+
+    &:hover {
+      background-color: rgba(color("primary"), 0.2);
+    }
+  }
+}
+
+.viewControl {
+  display: flex;
+  gap: 5px;
+}
+
+.viewButton {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: theme-color($light-theme, "surface");
+  border: 1px solid rgba(color("primary"), 0.2);
+  color: color("secondary");
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  .viewIcon {
+    color: color("secondary");
+  }
+
+  &:hover {
+    background-color: rgba(color("primary"), 0.1);
+
+    .viewIcon {
+      color: color("primary");
+    }
+  }
+
+  &.active {
+    background-color: color("primary");
+    border-color: color("primary");
+
+    .viewIcon {
+      color: white;
+    }
+  }
+
+  [data-theme="dark"] & {
+    background-color: theme-color($dark-theme, "surface");
+    border: 1px solid rgba(color("primary"), 0.3);
+
+    &:hover {
+      background-color: rgba(color("primary"), 0.2);
+    }
+
+    &.active {
+      background-color: color("primary");
+    }
   }
 }
 
@@ -87,8 +371,9 @@
   max-width: 100%;
   position: relative;
   margin-bottom: $spacing-md;
-  top: 10px;
-
+  opacity: 0;
+  animation: fadeInLeft 0.6s ease-out 1.2s forwards;
+  animation-fill-mode: both;
   .searchIcon {
     position: absolute;
     left: 16px;
@@ -99,11 +384,44 @@
     font-size: 1rem;
     z-index: 2;
     color: color("secondary");
+    transition: all 0.3s ease;
   }
 
   @media (min-width: map-get($breakpoints, "tablet")) {
     max-width: 350px;
     margin-bottom: 0;
+  }
+}
+
+// Thêm nút xóa tìm kiếm
+.clearSearch {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: color("secondary");
+  font-size: 0.9rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+
+  &:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  [data-theme="dark"] & {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
   }
 }
 
@@ -155,6 +473,9 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-sm;
+  opacity: 0;
+  animation: fadeInRight 0.6s ease-out 1.6s forwards;
+  animation-fill-mode: both;
 
   @media (min-width: map-get($breakpoints, "tablet")) {
     align-items: flex-end;
@@ -166,6 +487,9 @@
   align-items: center;
   gap: $spacing-sm;
   margin-bottom: $spacing-sm;
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out 1.8s forwards;
+  animation-fill-mode: both;
 
   h3 {
     font-size: 1.1rem;
@@ -185,12 +509,39 @@
   }
 }
 
+// Nút xóa lọc theo tag
+.clearTagsButton {
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  background-color: rgba(color("primary"), 0.1);
+  color: color("primary");
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: rgba(color("primary"), 0.2);
+  }
+
+  [data-theme="dark"] & {
+    background-color: rgba(color("primary"), 0.2);
+
+    &:hover {
+      background-color: rgba(color("primary"), 0.3);
+    }
+  }
+}
+
 .tagsFilter {
   display: flex;
   flex-wrap: wrap;
   gap: $spacing-sm;
   max-width: 100%;
   justify-content: flex-start;
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out 2s forwards;
+  animation-fill-mode: both;
 
   @media (min-width: map-get($breakpoints, "tablet")) {
     justify-content: flex-end;
@@ -284,7 +635,144 @@
   }
 }
 
-.postsGrid {
+// Nút xóa tất cả bộ lọc
+.clearFiltersButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background-color: rgba(color("primary"), 0.1);
+  color: color("primary");
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-top: $spacing-sm;
+  align-self: flex-start;
+
+  .clearIcon {
+    font-size: 0.9rem;
+  }
+
+  &:hover {
+    background-color: rgba(color("primary"), 0.2);
+    transform: translateY(-2px);
+  }
+
+  [data-theme="dark"] & {
+    background-color: rgba(color("primary"), 0.2);
+
+    &:hover {
+      background-color: rgba(color("primary"), 0.3);
+    }
+  }
+}
+
+// Thêm phần tóm tắt bộ lọc
+.filterSummary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+  font-size: 0.95rem;
+  color: color("secondary");
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out 2.2s forwards;
+  animation-fill-mode: both;
+
+  span {
+    font-weight: 500;
+  }
+}
+
+.activeFilter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: rgba(color("primary"), 0.1);
+  color: color("primary");
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0;
+  animation: fadeIn 0.4s ease-out forwards;
+  animation-fill-mode: both;
+
+  &:nth-child(1) {
+    animation-delay: 2.3s;
+  }
+
+  &:nth-child(2) {
+    animation-delay: 2.4s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 2.5s;
+  }
+
+  .filterSumIcon {
+    font-size: 0.85rem;
+  }
+
+  .removeFilter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background: none;
+    border: none;
+    color: color("primary");
+    border-radius: 50%;
+    padding: 0;
+    margin-left: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.8rem;
+
+    &:hover {
+      background-color: rgba(color("primary"), 0.2);
+    }
+  }
+
+  [data-theme="dark"] & {
+    background-color: rgba(color("primary"), 0.2);
+
+    .removeFilter:hover {
+      background-color: rgba(color("primary"), 0.3);
+    }
+  }
+}
+
+// Nút reset lọc
+.resetButton {
+  background-color: color("primary");
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 24px;
+  font-weight: 600;
+  margin-top: $spacing-md;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: darken(color("primary"), 10%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(color("primary"), 0.4);
+  }
+
+  [data-theme="dark"] & {
+    box-shadow: 0 4px 12px rgba(color("primary"), 0.5);
+  }
+}
+
+// Container các bài viết
+.postsContainer {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: $spacing-xl;
@@ -296,8 +784,23 @@
   @media (min-width: map-get($breakpoints, "desktop")) {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  // Hiển thị dạng danh sách
+  &.listView {
+    grid-template-columns: 1fr;
+
+    .postCard {
+      display: flex;
+      flex-direction: row;
+
+      @media (max-width: map-get($breakpoints, "mobile")) {
+        flex-direction: column;
+      }
+    }
+  }
 }
 
+// Không có kết quả
 .noResults {
   text-align: center;
   padding: $spacing-xl;
@@ -326,33 +829,46 @@
   }
 }
 
-// Optional pagination styles
-.pagination {
+// Trạng thái đang tải
+.loadingContainer {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  margin-top: $spacing-xl;
-  gap: $spacing-sm;
-
-  .pageButton {
-    @include button-outline;
-    padding: $spacing-sm $spacing-md;
-    min-width: 40px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-
-    &:hover {
-      transform: translateY(-2px);
-    }
-
-    &.active {
-      background-color: color("primary");
-      color: white;
-      box-shadow: 0 4px 8px rgba(color("primary"), 0.3);
-    }
+  padding: $spacing-xl;
+  margin: $spacing-xl auto;
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out forwards;
+  animation-fill-mode: both;
+  p {
+    margin-top: $spacing-lg;
+    font-size: 1.1rem;
+    color: color("secondary");
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out 0.3s forwards;
+    animation-fill-mode: both;
   }
 }
 
-// Animation for post cards
+.loader {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(color("primary"), 0.2);
+  border-top: 4px solid color("primary");
+  border-radius: 50%;
+  animation: spin 1s linear infinite, pulse 2s ease-in-out infinite;
+}
+
+//Animations
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -361,6 +877,98 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 

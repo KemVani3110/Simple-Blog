@@ -4,25 +4,44 @@ import Head from "next/head";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Loading from "@/components/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLeaf,
   faBook,
   faPen,
   faUsers,
+  faCalendarAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import { faFacebookF, faGithub } from "@fortawesome/free-brands-svg-icons";
 
 export default function About() {
   const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setMounted(true);
+
+    // Add animation delay to simulate loading and show animations
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 300);
+
+    return () => clearTimeout(timer);
   }, []);
 
   if (!mounted) {
     return null;
   }
 
+  const foundingDate = "2023";
+  const currentYear = new Date().getFullYear();
+  const yearsActive = currentYear - parseInt(foundingDate);
+
+  // Show loading component while data is loading
+  if (loading) {
+    return <Loading fullPage text="Đang tải trang..." size="large" />;
+  }
   return (
     <>
       <Head>
@@ -37,14 +56,37 @@ export default function About() {
 
       <Navbar />
 
-      <main className={styles.aboutPage}>
+      <main
+        className={`${styles.aboutPage} ${
+          loading ? styles.loading : styles.loaded
+        }`}
+      >
         <div className="container">
-          <section className={styles.hero}>
+          {/*Hero Heading Section*/}
+          <section className={`${styles.hero} ${styles.animateItem}`}>
             <h1>Về Next Blog</h1>
             <p>Nơi chia sẻ kiến thức và đam mê</p>
+            <div className={styles.stats}>
+              <div className={styles.statItem}>
+                <span className={styles.statNumber}>150+</span>
+                <span className={styles.statLabel}>Bài viết</span>
+              </div>
+              <div className={styles.statItem}>
+                <span className={styles.statNumber}>10k+</span>
+                <span className={styles.statLabel}>Độc giả</span>
+              </div>
+              <div className={styles.statItem}>
+                <span className={styles.statNumber}>{yearsActive}</span>
+                <span className={styles.statLabel}>Năm hoạt động</span>
+              </div>
+            </div>
           </section>
 
-          <section className={styles.aboutContent}>
+          {/*About Content Section*/}
+          <section
+            className={`${styles.aboutContent} ${styles.animateItem}`}
+            style={{ animationDelay: "100ms" }}
+          >
             <div className={styles.imageContainer}>
               <div className={styles.imageWrapper}>
                 <Image
@@ -72,10 +114,38 @@ export default function About() {
                 nhật các xu hướng mới nhất trong thế giới công nghệ và phát
                 triển web.
               </p>
+              <div className={styles.milestones}>
+                <h3>
+                  <FontAwesomeIcon icon={faCalendarAlt} /> Những cột mốc quan
+                  trọng
+                </h3>
+                <ul>
+                  <li>
+                    <strong>2023:</strong> Thành lập Next Blog
+                  </li>
+                  <li>
+                    <strong>2023:</strong> Đạt 1,000 độc giả đầu tiên
+                  </li>
+                  <li>
+                    <strong>2024:</strong> Mở rộng đội ngũ lên 10 thành viên
+                  </li>
+                  <li>
+                    <strong>2024:</strong> Ra mắt phiên bản mới với nhiều tính
+                    năng hơn
+                  </li>
+                  <li>
+                    <strong>2025:</strong> Đạt 10,000+ độc giả thường xuyên
+                  </li>
+                </ul>
+              </div>
             </div>
           </section>
 
-          <section className={styles.values}>
+          {/*Team Values Section*/}
+          <section
+            className={`${styles.values} ${styles.animateItem}`}
+            style={{ animationDelay: "200ms" }}
+          >
             <h2>Giá trị cốt lõi</h2>
             <div className={styles.valueGrid}>
               <div className={styles.valueCard}>
@@ -124,7 +194,11 @@ export default function About() {
             </div>
           </section>
 
-          <section className={styles.team}>
+          {/*Team Section*/}
+          <section
+            className={`${styles.team} ${styles.animateItem}`}
+            style={{ animationDelay: "300ms" }}
+          >
             <h2>Đội ngũ của chúng tôi</h2>
             <div className={styles.teamGrid}>
               <div className={styles.teamMember}>
@@ -138,6 +212,14 @@ export default function About() {
                 </div>
                 <h3>Huỳnh Chu Minh Khôi</h3>
                 <p>Founder & CEO</p>
+                <div className={styles.memberSocial}>
+                  <div className={styles.infoIcon}>
+                    <FontAwesomeIcon icon={faFacebookF} aria-label="Facebook" />
+                  </div>
+                  <div className={styles.infoIcon}>
+                    <FontAwesomeIcon icon={faGithub} aria-label="GitHub" />
+                  </div>
+                </div>
               </div>
 
               <div className={styles.teamMember}>
@@ -151,6 +233,14 @@ export default function About() {
                 </div>
                 <h3>Huỳnh Chu Minh Khôi</h3>
                 <p>Lead Developer</p>
+                <div className={styles.memberSocial}>
+                  <div className={styles.infoIcon}>
+                    <FontAwesomeIcon icon={faFacebookF} aria-label="Facebook" />
+                  </div>
+                  <div className={styles.infoIcon}>
+                    <FontAwesomeIcon icon={faGithub} aria-label="GitHub" />
+                  </div>
+                </div>
               </div>
 
               <div className={styles.teamMember}>
@@ -164,6 +254,14 @@ export default function About() {
                 </div>
                 <h3>Huỳnh Chu Minh Khôi</h3>
                 <p>Content Editor</p>
+                <div className={styles.memberSocial}>
+                  <div className={styles.infoIcon}>
+                    <FontAwesomeIcon icon={faFacebookF} aria-label="Facebook" />
+                  </div>
+                  <div className={styles.infoIcon}>
+                    <FontAwesomeIcon icon={faGithub} aria-label="GitHub" />
+                  </div>
+                </div>
               </div>
 
               <div className={styles.teamMember}>
@@ -177,6 +275,14 @@ export default function About() {
                 </div>
                 <h3>Huỳnh Chu Minh Khôi</h3>
                 <p>UX/UI Designer</p>
+                <div className={styles.memberSocial}>
+                  <div className={styles.infoIcon}>
+                    <FontAwesomeIcon icon={faFacebookF} aria-label="Facebook" />
+                  </div>
+                  <div className={styles.infoIcon}>
+                    <FontAwesomeIcon icon={faGithub} aria-label="GitHub" />
+                  </div>
+                </div>
               </div>
             </div>
           </section>
