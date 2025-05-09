@@ -5,7 +5,8 @@
   background-color: theme-color($light-theme, "card-bg");
   color: theme-color($light-theme, "text");
   border: 1px solid theme-color($light-theme, "card-border");
-
+   transition: all 0.3s ease;
+   
   [data-theme="dark"] & {
     background-color: theme-color($dark-theme, "card-bg");
     color: theme-color($dark-theme, "text");

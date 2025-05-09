@@ -5,7 +5,8 @@
   background-color: theme-color($light-theme, "footer-bg");
   padding: $footer-padding;
   color: theme-color($light-theme, "text");
-
+  transition: all 0.3s ease;
+  
   [data-theme="dark"] & {
     background-color: theme-color($dark-theme, "footer-bg");
     color: theme-color($dark-theme, "text");

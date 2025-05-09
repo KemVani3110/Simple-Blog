@@ -11,7 +11,8 @@
   border-radius: 12px;
   box-shadow: 0 5px 20px theme-color($light-theme, "shadow");
   position: relative;
-
+  transition: all 0.3s ease;
+  
   @include respond-to("tablet") {
     padding: $spacing-md;
   }
