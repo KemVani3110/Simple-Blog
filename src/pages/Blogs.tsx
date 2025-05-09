@@ -160,74 +160,79 @@ export default function BlogsPage({ posts }: BlogsPageProps) {
             showFilters ? styles.showFilters : ""
           }`}
         >
-          <div className={styles.searchBox}>
-            <FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
-            <input
-              type="text"
-              placeholder="Tìm kiếm bài viết..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className={styles.searchInput}
-            />
-            {searchQuery && (
-              <button
-                className={styles.clearSearch}
-                onClick={() => setSearchQuery("")}
-                aria-label="Xóa tìm kiếm"
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </button>
-            )}
-          </div>
+          <div className={styles.filterTopSection}>
+            {/* Search Box */}
+            <div className={styles.searchBox}>
+              <FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
+              <input
+                type="text"
+                placeholder="Tìm kiếm bài viết..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={styles.searchInput}
+              />
+              {searchQuery && (
+                <button
+                  className={styles.clearSearch}
+                  onClick={() => setSearchQuery("")}
+                  aria-label="Xóa tìm kiếm"
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+              )}
+            </div>
 
-          <div className={styles.filterControls}>
-            <div className={styles.sortControl}>
-              <button
-                className={styles.sortButton}
-                onClick={() =>
-                  setSortOrder(sortOrder === "newest" ? "oldest" : "newest")
-                }
-                aria-label={
-                  sortOrder === "newest"
-                    ? "Sắp xếp từ mới đến cũ"
-                    : "Sắp xếp từ cũ đến mới"
-                }
-              >
-                <FontAwesomeIcon
-                  icon={
-                    sortOrder === "newest" ? faSortAmountDown : faSortAmountUp
+            {/* Filter Controls */}
+            <div className={styles.filterControls}>
+              <div className={styles.sortControl}>
+                <button
+                  className={styles.sortButton}
+                  onClick={() =>
+                    setSortOrder(sortOrder === "newest" ? "oldest" : "newest")
                   }
-                  className={styles.sortIcon}
-                />
-                {sortOrder === "newest" ? "Mới nhất" : "Cũ nhất"}
-              </button>
-            </div>
+                  aria-label={
+                    sortOrder === "newest"
+                      ? "Sắp xếp từ mới đến cũ"
+                      : "Sắp xếp từ cũ đến mới"
+                  }
+                >
+                  <FontAwesomeIcon
+                    icon={
+                      sortOrder === "newest" ? faSortAmountDown : faSortAmountUp
+                    }
+                    className={styles.sortIcon}
+                  />
+                  {sortOrder === "newest" ? "Mới nhất" : "Cũ nhất"}
+                </button>
+              </div>
 
-            <div className={styles.viewControl}>
-              <button
-                className={`${styles.viewButton} ${
-                  viewMode === "grid" ? styles.active : ""
-                }`}
-                onClick={() => setViewMode("grid")}
-                aria-label="Xem dạng lưới"
-              >
-                <FontAwesomeIcon
-                  icon={faLayerGroup}
-                  className={styles.viewIcon}
-                />
-              </button>
-              <button
-                className={`${styles.viewButton} ${
-                  viewMode === "list" ? styles.active : ""
-                }`}
-                onClick={() => setViewMode("list")}
-                aria-label="Xem dạng danh sách"
-              >
-                <FontAwesomeIcon icon={faList} className={styles.viewIcon} />
-              </button>
+              <div className={styles.viewControl}>
+                <button
+                  className={`${styles.viewButton} ${
+                    viewMode === "grid" ? styles.active : ""
+                  }`}
+                  onClick={() => setViewMode("grid")}
+                  aria-label="Xem dạng lưới"
+                >
+                  <FontAwesomeIcon
+                    icon={faLayerGroup}
+                    className={styles.viewIcon}
+                  />
+                </button>
+                <button
+                  className={`${styles.viewButton} ${
+                    viewMode === "list" ? styles.active : ""
+                  }`}
+                  onClick={() => setViewMode("list")}
+                  aria-label="Xem dạng danh sách"
+                >
+                  <FontAwesomeIcon icon={faList} className={styles.viewIcon} />
+                </button>
+              </div>
             </div>
           </div>
 
+          {/* Tags Container */}
           <div className={styles.tagsContainer}>
             <div className={styles.tagsHeader}>
               <FontAwesomeIcon icon={faTags} className={styles.headerIcon} />
@@ -282,39 +287,8 @@ export default function BlogsPage({ posts }: BlogsPageProps) {
             </button>
           )}
         </div>
-
-        {/*Filter Summary*/}
-        <div className={styles.filterSummary}>
-          <span>Hiển thị {filteredPosts.length} bài viết</span>
-          {selectedTag && (
-            <div className={styles.activeFilter}>
-              <FontAwesomeIcon icon={faTags} className={styles.filterSumIcon} />
-              {selectedTag}
-              <button
-                onClick={() => setSelectedTag(null)}
-                className={styles.removeFilter}
-                aria-label="Xóa bộ lọc chủ đề"
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </button>
-            </div>
-          )}
-          {searchQuery && (
-            <div className={styles.activeFilter}>
-              <FontAwesomeIcon
-                icon={faSearch}
-                className={styles.filterSumIcon}
-              />
-              "{searchQuery}"
-              <button
-                onClick={() => setSearchQuery("")}
-                className={styles.removeFilter}
-                aria-label="Xóa bộ lọc tìm kiếm"
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </button>
-            </div>
-          )}
+        <div className={styles.filterInfo}>
+           <span>Hiển thị {filteredPosts.length} bài viết</span>
         </div>
 
         {/*Loading*/}
